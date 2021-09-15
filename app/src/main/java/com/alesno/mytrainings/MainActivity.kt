@@ -5,17 +5,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.navigation.compose.rememberNavController
-import com.alesno.mytrainings.training.TrainingScreen
+import com.alesno.mytrainings.ui.training.TrainingScreen
 import com.alesno.mytrainings.ui.theme.MyTrainingsTheme
 import com.alesno.mytrainings.ui.theme.Purple700
+import com.alesno.mytrainings.ui.trainingList.TrainingListScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -26,7 +27,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             MyTrainingsTheme {
-                TrainingScreen(store = mViewModel.trainingStore)
+                Column {
+                    TrainingListScreen(store = mViewModel.trainingListStore)
+                }
             }
         }
     }

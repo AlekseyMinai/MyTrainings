@@ -1,4 +1,4 @@
-package com.alesno.mytrainings.training
+package com.alesno.mytrainings.ui.training
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -14,26 +14,31 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension.*
 import com.alesno.mytrainings.R
-import com.alesno.mytrainings.domain.TrainingExercise
-import com.alesno.mytrainings.domain.TrainingExerciseId
-import com.alesno.mytrainings.domain.TrainingSet
-import com.alesno.mytrainings.fake.FakeData
-import com.alesno.mytrainings.training.presentation.TrainingIntent
-import com.alesno.mytrainings.training.presentation.TrainingStore
+import com.alesno.mytrainings.domain.training.TrainingExercise
+import com.alesno.mytrainings.domain.training.TrainingExerciseId
+import com.alesno.mytrainings.domain.training.TrainingSet
+import com.alesno.mytrainings.ui.common.Toolbar
+import com.alesno.mytrainings.presentation.training.TrainingIntent
+import com.alesno.mytrainings.presentation.training.TrainingStore
 import kotlinx.coroutines.launch
 
 @Composable
 fun TrainingScreen(store: TrainingStore) {
-    val state by store.trainingState.collectAsState(FakeData.createTraining())
+    val state by store.state.collectAsState()
+    val coroutineStore = rememberCoroutineScope()
+
     Column(modifier = Modifier.fillMaxWidth()) {
-        val coroutineStore = rememberCoroutineScope()
-        TrainingExercises(exercises = state.exercises) {
+        Toolbar(title = state.training.name)
+        TrainingExercises(exercises = state.training.exercises) {
             coroutineStore.launch {
-                store.proceed(TrainingIntent.AddSet(it, 50, 12))
+                store.accept(TrainingIntent.AddSet(it, 50, 12))
             }
         }
     }
@@ -45,11 +50,7 @@ fun TrainingExercises(
     onNewSetClicked: (TrainingExerciseId) -> Unit
 ) {
     LazyColumn {
-        item {
-            Box(Modifier.padding(vertical = 16.dp))
-        }
         items(exercises.size) { index ->
-            Text(exercises[index].info.name, modifier = Modifier.padding(start = 8.dp, bottom = 16.dp))
             TrainingExercise(exercise = exercises[index], onNewSetClicked)
         }
     }
@@ -57,16 +58,62 @@ fun TrainingExercises(
 
 @Composable
 fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (TrainingExerciseId) -> Unit) {
+    Text(
+        text = exercise.info.name,
+        color = Color.White,
+        modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+    )
     Card(
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(8.dp),
         backgroundColor = MaterialTheme.colors.surface,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
-        Row(Modifier.padding(top = 12.dp, bottom = 12.dp, start = 12.dp)) {
+        ConstraintLayout(Modifier.padding(top = 16.dp, bottom = 12.dp)) {
+            val (list, button) = createRefs()
+            TrainingSets(
+                trainingSets = exercise.sets,
+                modifier = Modifier.constrainAs(list) {
+                    start.linkTo(parent.start)
+                    end.linkTo(button.start, margin = 8.dp)
+                    top.linkTo(parent.top)
+                    width = Companion.fillToConstraints
+                }
+            )
+            Box(
+                modifier = Modifier
+                    .constrainAs(button) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end, margin = 8.dp)
+                        width = Companion.preferredWrapContent
+                    }
+            ) {
+                Button(
+                    onClick = { onNewSetClicked(exercise.id) },
+                    shape = CircleShape,
+                    modifier = Modifier.size(42.dp)
+                ) {
+                    Icon(
+                        Icons.Filled.Add,
+                        contentDescription = "Localized description",
+                        tint = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
+    LazyRow(modifier = modifier) {
+        item {
+            Spacer(modifier = Modifier.width(8.dp))
+        }
+        item {
             Card(
-                modifier = Modifier.size(52.dp),
+                modifier = Modifier.size(48.dp),
                 shape = CircleShape,
                 elevation = 2.dp,
                 backgroundColor = MaterialTheme.colors.onSurface
@@ -80,21 +127,10 @@ fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (TrainingExerc
                         .padding(16.dp)
                 )
             }
-            Column(
-                modifier = Modifier.padding(start = 8.dp)
-            ) {
-                TrainingSets(trainingSets = exercise.sets) { onNewSetClicked(exercise.id) }
-            }
         }
-    }
-}
-
-@Composable
-fun TrainingSets(trainingSets: List<TrainingSet>, onNewSetClicked: () -> Unit) {
-    LazyRow {
         item {
             Column {
-                Column(Modifier.padding(start = 8.dp, end = 16.dp)) {
+                Column(Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp)) {
                     Text(
                         text = "Вес",
                         modifier = Modifier.padding(bottom = 6.dp)
@@ -105,22 +141,6 @@ fun TrainingSets(trainingSets: List<TrainingSet>, onNewSetClicked: () -> Unit) {
         }
         items(trainingSets.size) { index ->
             TrainingSet(trainingSets[index])
-        }
-        item {
-            Box(modifier = Modifier.padding(start = 8.dp, end = 16.dp)) {
-                Button(
-                    onClick = { onNewSetClicked() },
-                    shape = CircleShape,
-                    modifier = Modifier
-                        .size(42.dp)
-                ) {
-                    Icon(
-                        Icons.Filled.Add,
-                        contentDescription = "Localized description",
-                        tint = MaterialTheme.colors.onPrimary
-                    )
-                }
-            }
         }
     }
 }

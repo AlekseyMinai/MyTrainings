@@ -1,4 +1,4 @@
-package com.alesno.mytrainings.domain
+package com.alesno.mytrainings.domain.training
 
 data class TrainingExercise(
     val id: TrainingExerciseId,

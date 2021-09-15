@@ -1,9 +1,18 @@
 package com.alesno.mytrainings.fake
 
-import com.alesno.mytrainings.domain.*
+import com.alesno.mytrainings.domain.training.*
+import com.alesno.mytrainings.domain.trainingList.TrainingInfo
+import com.alesno.mytrainings.domain.trainingList.TrainingInfoId
 import java.util.*
 
 object FakeData {
+
+    fun getTrainings() = mutableListOf<TrainingInfo>()
+        .apply {
+            add(TrainingInfo(TrainingInfoId("1"), "Грудь бицепс"))
+            add(TrainingInfo(TrainingInfoId("2"), "Спина трицепс"))
+            add(TrainingInfo(TrainingInfoId("3"), "Ноги"))
+        }
 
     fun createTraining(): Training {
         return Training(
@@ -38,6 +47,14 @@ object FakeData {
                         TrainingSet(20, 10),
                         TrainingSet(20, 10)
                     )
+                ),
+                TrainingExercise(
+                    id = TrainingExerciseId(3L),
+                    info = ExerciseInfo(
+                        name = "Empty",
+                        muscleGroup = "Грудь"
+                    ),
+                    sets = emptyList()
                 )
             )
         )
