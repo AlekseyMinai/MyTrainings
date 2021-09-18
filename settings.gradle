@@ -8,3 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MyTrainings"
 include ':app'
+include ':core_navigation'
+include ':feature_training'
+include ':feature_training_list'
