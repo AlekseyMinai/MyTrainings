@@ -1,11 +1,12 @@
 package com.alexey.minay.core_ui
 
+import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 abstract class Store<State, Intent, Event>(
     initState: State
-) {
+): ViewModel() {
 
     val state: StateFlow<State> by uiLazy { mState.asStateFlow() }
     val event: SharedFlow<Event> by uiLazy { mEvent.asSharedFlow() }

@@ -29,6 +29,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerVersion '1.4.32'
+    }
 }
 
 dependencies {
@@ -39,4 +46,5 @@ dependencies {
     api "androidx.compose.ui:ui-tooling:$compose_version"
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     api 'androidx.activity:activity-compose:1.4.0-alpha02'
+    api "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
 }

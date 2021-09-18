@@ -1,8 +1,8 @@
 package com.alesno.mytrainings.fake
 
-import com.alesno.mytrainings.domain.training.*
-import com.alesno.mytrainings.domain.trainingList.TrainingInfo
-import com.alesno.mytrainings.domain.trainingList.TrainingInfoId
+import com.alexey.minay.feature_training_list.domain.TrainingInfo
+import com.alexey.minay.feature_training_list.domain.TrainingInfoId
+import com.alexey.minay.feature_training.domain.*
 import java.util.*
 
 object FakeData {
