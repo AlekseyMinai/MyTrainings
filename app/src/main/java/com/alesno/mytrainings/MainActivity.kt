@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.compose.rememberNavController
+import com.alesno.mytrainings.navigation.NavGraph
 import com.alesno.mytrainings.ui.training.TrainingScreen
 import com.alesno.mytrainings.ui.theme.MyTrainingsTheme
 import com.alesno.mytrainings.ui.theme.Purple700
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             MyTrainingsTheme {
                 Column {
-                    TrainingListScreen(store = mViewModel.trainingListStore)
+                    NavGraph(navController = navController)
                 }
             }
         }

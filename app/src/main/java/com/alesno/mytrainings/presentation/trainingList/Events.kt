@@ -1,7 +1,9 @@
 package com.alesno.mytrainings.presentation.trainingList
 
-sealed interface TrainingListIntent{
+import com.alesno.mytrainings.domain.trainingList.TrainingInfoId
 
+sealed interface TrainingListIntent {
+    class StartNewTraining(trainingInfoId: TrainingInfoId) : TrainingListIntent
 }
 
 sealed interface TrainingListEvent {

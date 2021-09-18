@@ -1,33 +1,44 @@
 package com.alesno.mytrainings.ui.trainingList
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alesno.mytrainings.R
 import com.alesno.mytrainings.domain.trainingList.TrainingInfo
 import com.alesno.mytrainings.domain.trainingList.TrainingInfoId
+import com.alesno.mytrainings.presentation.trainingList.TrainingListIntent
 import com.alesno.mytrainings.presentation.trainingList.TrainingListStore
 import com.alesno.mytrainings.ui.common.Toolbar
+import kotlinx.coroutines.launch
 
 @Composable
 fun TrainingListScreen(store: TrainingListStore) {
     val state by store.state.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+
     Column {
         Toolbar(title = stringResource(R.string.training_list))
         TrainingList(state.trainings) {
-
+            coroutineScope.launch {
+                store.accept(TrainingListIntent.StartNewTraining(it))
+            }
         }
     }
 }
@@ -48,11 +59,21 @@ private fun TrainingList(trainings: List<TrainingInfo>, onClick: (id: TrainingIn
 
 @Composable
 private fun TrainingListItem(trainingInfo: TrainingInfo, onClick: () -> Unit) {
-    Box(modifier = Modifier.clickable { onClick() }) {
-        Text(
-            text = trainingInfo.name,
-            color = Color.White,
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 36.dp, bottom = 36.dp)
-        )
+    Box(Modifier.padding(4.dp)) {
+        Box(
+            modifier = Modifier
+                .clickable { onClick() }
+                .border(
+                    width = 1.dp,
+                    color = colorResource(id = R.color.purple_500),
+                    shape = RoundedCornerShape(4.dp),
+                ).fillMaxSize()
+        ) {
+            Text(
+                text = trainingInfo.name,
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 36.dp, bottom = 36.dp)
+                    .align(Alignment.Center)
+            )
+        }
     }
 }

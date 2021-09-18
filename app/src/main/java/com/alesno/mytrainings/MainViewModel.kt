@@ -10,6 +10,6 @@ import com.alesno.mytrainings.presentation.trainingList.TrainingListStore
 class MainViewModel : ViewModel() {
 
     val trainingStore = TrainingStore(TrainingState(FakeData.createTraining()))
-    val trainingListStore = TrainingListStore(TrainingListState(FakeData.getTrainings()))
+    //val trainingListStore = TrainingListStore(TrainingListState(FakeData.getTrainings()))
 
 }

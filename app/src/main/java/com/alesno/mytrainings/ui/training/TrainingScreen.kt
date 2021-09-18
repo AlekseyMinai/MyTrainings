@@ -1,5 +1,6 @@
 package com.alesno.mytrainings.ui.training
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ import com.alesno.mytrainings.domain.training.TrainingSet
 import com.alesno.mytrainings.ui.common.Toolbar
 import com.alesno.mytrainings.presentation.training.TrainingIntent
 import com.alesno.mytrainings.presentation.training.TrainingStore
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -38,7 +40,11 @@ fun TrainingScreen(store: TrainingStore) {
         Toolbar(title = state.training.name)
         TrainingExercises(exercises = state.training.exercises) {
             coroutineStore.launch {
-                store.accept(TrainingIntent.AddSet(it, 50, 12))
+                //store.accept(TrainingIntent.AddSet(it, 50, 12))
+                while (true) {
+                    delay(1000)
+                    Log.d("TrainingScreen", "TrainingScreen print")
+                }
             }
         }
     }
