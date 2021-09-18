@@ -34,7 +34,7 @@ fun TrainingListScreen(store: TrainingListStore) {
     val coroutineScope = rememberCoroutineScope()
 
     Column {
-        Toolbar(title = stringResource(R.string.training_list))
+        Toolbar(title = stringResource(com.alexey.minay.core_ui.R.string.training_list))
         TrainingList(state.trainings) {
             coroutineScope.launch {
                 store.accept(TrainingListIntent.StartNewTraining(it))
@@ -65,7 +65,7 @@ private fun TrainingListItem(trainingInfo: TrainingInfo, onClick: () -> Unit) {
                 .clickable { onClick() }
                 .border(
                     width = 1.dp,
-                    color = colorResource(id = R.color.purple_500),
+                    color = colorResource(id = com.alexey.minay.core_ui.R.color.purple_500),
                     shape = RoundedCornerShape(4.dp),
                 ).fillMaxSize()
         ) {
