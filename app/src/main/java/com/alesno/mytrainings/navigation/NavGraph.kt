@@ -11,6 +11,7 @@ import com.alesno.mytrainings.presentation.trainingList.TrainingListState
 import com.alesno.mytrainings.presentation.trainingList.TrainingListStore
 import com.alesno.mytrainings.ui.training.TrainingScreen
 import com.alesno.mytrainings.ui.trainingList.TrainingListScreen
+import com.alexey.minay.core_navigation.Destination
 
 @Composable
 fun NavGraph(

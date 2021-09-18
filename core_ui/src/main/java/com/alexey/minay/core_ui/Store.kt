@@ -1,6 +1,5 @@
-package com.alesno.mytrainings.lib
+package com.alexey.minay.core_ui
 
-import com.alesno.mytrainings.utils.uiLazy
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 

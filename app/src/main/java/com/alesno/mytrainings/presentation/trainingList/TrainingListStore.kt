@@ -1,8 +1,8 @@
 package com.alesno.mytrainings.presentation.trainingList
 
 import androidx.navigation.NavController
-import com.alesno.mytrainings.lib.Store
-import com.alesno.mytrainings.navigation.Destination
+import com.alexey.minay.core_ui.Store
+import com.alexey.minay.core_navigation.Destination
 
 class TrainingListStore(
     private val navController: NavController,

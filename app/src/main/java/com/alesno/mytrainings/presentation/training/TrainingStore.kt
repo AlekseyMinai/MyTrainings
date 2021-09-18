@@ -1,6 +1,6 @@
 package com.alesno.mytrainings.presentation.training
 
-import com.alesno.mytrainings.lib.Store
+import com.alexey.minay.core_ui.Store
 
 class TrainingStore(
     initialState: TrainingState
