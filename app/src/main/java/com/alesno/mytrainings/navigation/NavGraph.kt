@@ -19,7 +19,6 @@ fun NavGraph(
     navController: NavHostController,
     startDestination: Destination = Destination.TRAINING_LIST
 ) {
-    val navigator = Navigator(navController)
     NavHost(
         navController = navController,
         startDestination = startDestination.value
@@ -33,7 +32,7 @@ fun NavGraph(
             )
             TrainingListScreen(
                 store = store,
-                navigator = navigator
+                startTraining = { navController.navigate(Destination.TRAINING.value) }
             )
         }
         composable(
@@ -45,9 +44,8 @@ fun NavGraph(
             )
             TrainingScreen(
                 store = store,
-                navigator = navigator,
                 onBackPressed = {
-                    navigator.popBackstack()
+                    navController.popBackStack()
                     TrainingComponent.release()
                 }
             )

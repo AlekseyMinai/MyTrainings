@@ -31,7 +31,6 @@ import com.alexey.minay.feature_training.presentation.TrainingStore
 @Composable
 fun TrainingScreen(
     store: TrainingStore,
-    navigator: INavigator,
     onBackPressed: () -> Unit
 ) {
     val state by store.state.collectAsState()

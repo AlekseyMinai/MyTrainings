@@ -19,25 +19,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.alexey.minay.core_navigation.Destination
-import com.alexey.minay.core_navigation.INavigator
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.feature_training_list.domain.TrainingInfo
 import com.alexey.minay.feature_training_list.domain.TrainingInfoId
-import com.alexey.minay.feature_training_list.presentation.TrainingListIntent
 import com.alexey.minay.feature_training_list.presentation.TrainingListStore
 
 @Composable
 fun TrainingListScreen(
     store: TrainingListStore,
-    navigator: INavigator
+    startTraining: (trainingId: TrainingInfoId) -> Unit
 ) {
     val state by store.state.collectAsState()
 
     Column {
         Toolbar(title = stringResource(com.alexey.minay.core_ui.R.string.training_list))
         TrainingList(state.trainings) {
-            navigator.navigateTo(Destination.TRAINING)
+            startTraining(it)
         }
     }
 }
