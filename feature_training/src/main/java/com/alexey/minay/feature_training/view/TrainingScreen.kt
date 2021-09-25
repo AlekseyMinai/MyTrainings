@@ -1,6 +1,5 @@
 package com.alexey.minay.feature_training.view
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,40 +12,36 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.alesno.mytrainings.ui.common.Toolbar
+import com.alexey.minay.core_navigation.INavigator
+import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.feature_training.R
 import com.alexey.minay.feature_training.domain.TrainingExercise
 import com.alexey.minay.feature_training.domain.TrainingExerciseId
 import com.alexey.minay.feature_training.domain.TrainingSet
+import com.alexey.minay.feature_training.presentation.TrainingIntent
 import com.alexey.minay.feature_training.presentation.TrainingStore
-import kotlinx.coroutines.NonDisposableHandle.parent
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
-fun TrainingScreen(store: TrainingStore) {
+fun TrainingScreen(
+    store: TrainingStore,
+    navigator: INavigator
+) {
     val state by store.state.collectAsState()
-    val coroutineStore = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        Toolbar(title = state.training.name)
-        TrainingExercises(exercises = state.training.exercises) {
-            coroutineStore.launch {
-                //store.accept(TrainingIntent.AddSet(it, 50, 12))
-                while (true) {
-                    delay(1000)
-                    Log.d("TrainingScreen", "TrainingScreen print")
-                }
-            }
+        Toolbar(
+            title = state.training?.name ?: "",
+            onBackPressed = navigator::popBackstack
+        )
+        TrainingExercises(exercises = state.training?.exercises ?: emptyList()) {
+            store.accept(TrainingIntent.AddSet(it, 50, 12))
         }
     }
 }

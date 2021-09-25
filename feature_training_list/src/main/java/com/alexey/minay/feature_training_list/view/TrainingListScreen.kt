@@ -14,31 +14,30 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.alesno.mytrainings.ui.common.Toolbar
-import com.alexey.minay.feature_training_list.R
+import com.alexey.minay.core_navigation.Destination
+import com.alexey.minay.core_navigation.INavigator
+import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.feature_training_list.domain.TrainingInfo
 import com.alexey.minay.feature_training_list.domain.TrainingInfoId
 import com.alexey.minay.feature_training_list.presentation.TrainingListIntent
 import com.alexey.minay.feature_training_list.presentation.TrainingListStore
-import kotlinx.coroutines.launch
 
 @Composable
-fun TrainingListScreen(store: TrainingListStore) {
+fun TrainingListScreen(
+    store: TrainingListStore,
+    navigator: INavigator
+) {
     val state by store.state.collectAsState()
-    val coroutineScope = rememberCoroutineScope()
 
     Column {
         Toolbar(title = stringResource(com.alexey.minay.core_ui.R.string.training_list))
         TrainingList(state.trainings) {
-            coroutineScope.launch {
-                store.accept(TrainingListIntent.StartNewTraining(it))
-            }
+            navigator.navigateTo(Destination.TRAINING)
         }
     }
 }
@@ -67,11 +66,13 @@ private fun TrainingListItem(trainingInfo: TrainingInfo, onClick: () -> Unit) {
                     width = 1.dp,
                     color = colorResource(id = com.alexey.minay.core_ui.R.color.purple_500),
                     shape = RoundedCornerShape(4.dp),
-                ).fillMaxSize()
+                )
+                .fillMaxSize()
         ) {
             Text(
                 text = trainingInfo.name,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 36.dp, bottom = 36.dp)
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 8.dp, top = 36.dp, bottom = 36.dp)
                     .align(Alignment.Center)
             )
         }

@@ -9,6 +9,7 @@ dependencyResolutionManagement {
 rootProject.name = "MyTrainings"
 include ':app'
 include ':core_navigation'
+include ':core_ui'
+include ':core_dagger_2'
 include ':feature_training'
 include ':feature_training_list'
-include ':core_ui'

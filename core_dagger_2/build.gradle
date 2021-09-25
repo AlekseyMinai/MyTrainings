@@ -30,24 +30,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.4.32'
-    }
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
 
     implementation "com.google.dagger:dagger:2.36"
     kapt 'com.google.dagger:dagger-compiler:2.36'
-
-    implementation project(':core_navigation')
-    implementation project(':core_ui')
-    implementation project(':core_dagger_2')
 }

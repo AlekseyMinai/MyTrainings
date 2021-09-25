@@ -1,4 +1,4 @@
-package com.alesno.mytrainings.ui.common
+package com.alexey.minay.core_ui
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton

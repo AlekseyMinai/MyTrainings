@@ -1,13 +1,15 @@
 package com.alesno.mytrainings.di
 
 import androidx.navigation.NavController
-import com.alesno.mytrainings.navigation.Navigator
+import com.alexey.minay.core_dagger_2.MultiViewModelFactory
+import dagger.Component
 
-object AppComponent {
+@Component(
+    modules = [StoreBindings::class, AppModule::class],
+    dependencies = [NavController::class]
+)
+interface AppComponent {
 
-    lateinit var navigator: Navigator
+    val viewModelFactory: MultiViewModelFactory
 
-    fun initNavigator(navController: NavController) {
-        navigator = Navigator(navController = navController)
-    }
 }

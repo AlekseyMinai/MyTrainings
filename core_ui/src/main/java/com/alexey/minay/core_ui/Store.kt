@@ -1,38 +1,34 @@
 package com.alexey.minay.core_ui
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.*
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 abstract class Store<State, Intent, Event>(
     initState: State
-): ViewModel() {
+) : ViewModel() {
 
     val state: StateFlow<State> by uiLazy { mState.asStateFlow() }
     val event: SharedFlow<Event> by uiLazy { mEvent.asSharedFlow() }
 
     private val mState = MutableStateFlow(initState)
     private val mEvent = MutableSharedFlow<Event>()
-    private val mCoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
-    suspend fun accept(intent: Intent) {
-        mCoroutineScope.launch { execute(intent) }
+    fun accept(intent: Intent) {
+        viewModelScope.launch { execute(intent) }
     }
 
     protected abstract suspend fun execute(intent: Intent)
 
-    protected suspend fun modify(modifier: State.() -> State) {
-        mState.emit(mState.value.modifier())
+    protected fun modify(modifier: State.() -> State) {
+        mState.value = mState.value.modifier()
     }
 
     protected suspend fun send(event: Event) {
-        mCoroutineScope.launch {
+        viewModelScope.launch {
             mEvent.emit(event)
         }
-    }
-
-    fun onClear() {
-        mCoroutineScope.cancel()
     }
 
 }
