@@ -1,5 +1,6 @@
 package com.alexey.minay.feature_training.di
 
+import android.util.Log
 import com.alexey.minay.feature_training.presentation.TrainingStoreProvider
 import dagger.Component
 
@@ -13,7 +14,10 @@ interface TrainingComponent {
         var trainingComponent: TrainingComponent? = null
 
         fun initAndGet(): TrainingComponent {
-            return trainingComponent ?: DaggerTrainingComponent.create()
+            Log.d("TrainingComponent", "TrainingComponent $trainingComponent")
+            return trainingComponent ?: DaggerTrainingComponent.create().apply {
+                trainingComponent = this
+            }
         }
 
         fun release() {

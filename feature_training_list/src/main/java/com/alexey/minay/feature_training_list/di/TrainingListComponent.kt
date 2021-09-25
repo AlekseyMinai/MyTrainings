@@ -10,9 +10,12 @@ interface TrainingListComponent {
 
     companion object {
 
-        private val mTrainingListComponent: TrainingListComponent? = null
+        private var mTrainingListComponent: TrainingListComponent? = null
 
-        fun initAndGet(): TrainingListComponent = mTrainingListComponent ?: DaggerTrainingListComponent.create()
+        fun initAndGet(): TrainingListComponent =
+            mTrainingListComponent ?: DaggerTrainingListComponent.create().apply {
+                mTrainingListComponent = this
+            }
 
     }
 

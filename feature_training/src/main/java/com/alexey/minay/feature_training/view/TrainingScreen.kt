@@ -31,15 +31,17 @@ import com.alexey.minay.feature_training.presentation.TrainingStore
 @Composable
 fun TrainingScreen(
     store: TrainingStore,
-    navigator: INavigator
+    navigator: INavigator,
+    onBackPressed: () -> Unit
 ) {
     val state by store.state.collectAsState()
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Toolbar(
-            title = state.training?.name ?: "",
-            onBackPressed = navigator::popBackstack
-        )
+            title = state.training?.name ?: ""
+        ) {
+            onBackPressed()
+        }
         TrainingExercises(exercises = state.training?.exercises ?: emptyList()) {
             store.accept(TrainingIntent.AddSet(it, 50, 12))
         }

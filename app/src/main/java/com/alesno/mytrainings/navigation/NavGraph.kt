@@ -1,6 +1,7 @@
 package com.alesno.mytrainings.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -38,13 +39,17 @@ fun NavGraph(
         composable(
             route = Destination.TRAINING.value,
         ) {
-            val trainingComponent = TrainingComponent.initAndGet()
+            val trainingComponent = remember { TrainingComponent.initAndGet() }
             val store = viewModel<TrainingStore>(
                 factory = trainingComponent.trainingStoreProvider
             )
             TrainingScreen(
                 store = store,
-                navigator = navigator
+                navigator = navigator,
+                onBackPressed = {
+                    navigator.popBackstack()
+                    TrainingComponent.release()
+                }
             )
         }
     }
