@@ -6,8 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.alexey.minay.core_navigation.Destination
+import com.alexey.minay.feature_training.di.TrainingComponent
 import com.alexey.minay.feature_training.presentation.TrainingStore
 import com.alexey.minay.feature_training.view.TrainingScreen
+import com.alexey.minay.feature_training_list.di.TrainingListComponent
 import com.alexey.minay.feature_training_list.presentation.TrainingListStore
 import com.alexey.minay.feature_training_list.view.TrainingListScreen
 
@@ -24,8 +26,9 @@ fun NavGraph(
         composable(
             route = Destination.TRAINING_LIST.value,
         ) {
+            val trainingListComponent = TrainingListComponent.initAndGet()
             val store = viewModel<TrainingListStore>(
-                factory = TrainingListStore.provideFactory()
+                factory = trainingListComponent.trainingListStoreProvider
             )
             TrainingListScreen(
                 store = store,
@@ -35,8 +38,9 @@ fun NavGraph(
         composable(
             route = Destination.TRAINING.value,
         ) {
+            val trainingComponent = TrainingComponent.initAndGet()
             val store = viewModel<TrainingStore>(
-                factory = TrainingStore.provideFactory()
+                factory = trainingComponent.trainingStoreProvider
             )
             TrainingScreen(
                 store = store,

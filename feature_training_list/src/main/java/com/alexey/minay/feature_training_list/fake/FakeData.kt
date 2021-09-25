@@ -8,8 +8,8 @@ object FakeData {
 
     fun getTrainings() = mutableListOf<TrainingInfo>()
         .apply {
-            add(TrainingInfo(TrainingInfoId("1"), "Грудь бицепс"))
-            add(TrainingInfo(TrainingInfoId("2"), "Спина трицепс"))
+            add(TrainingInfo(TrainingInfoId("1"), "Грудь и бицепс"))
+            add(TrainingInfo(TrainingInfoId("2"), "Спина и трицепс"))
             add(TrainingInfo(TrainingInfoId("3"), "Ноги"))
         }
 

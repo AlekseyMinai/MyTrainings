@@ -27,18 +27,4 @@ class TrainingStore @Inject constructor(
         }
     }
 
-    companion object {
-        fun provideFactory(
-            trainingState: TrainingState = TrainingState.default()
-        ): ViewModelProvider.Factory =
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return TrainingStore(
-                        initialState = trainingState
-                    ) as T
-                }
-
-            }
-    }
-
 }
