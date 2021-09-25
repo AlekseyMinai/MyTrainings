@@ -6,7 +6,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.alexey.minay.core_navigation.Destination
+import com.alexey.minay.core_training.TrainingInfoId
+import com.alexey.minay.feature_training.di.ITrainingDependencies
 import com.alexey.minay.feature_training.di.TrainingComponent
 import com.alexey.minay.feature_training.presentation.TrainingStore
 import com.alexey.minay.feature_training.view.TrainingScreen
@@ -17,14 +18,14 @@ import com.alexey.minay.feature_training_list.view.TrainingListScreen
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: Destination = Destination.TRAINING_LIST
+    startDestination: Destination = Destination.TrainingList
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination.value
+        startDestination = startDestination.route
     ) {
         composable(
-            route = Destination.TRAINING_LIST.value,
+            route = Destination.TrainingList.route,
         ) {
             val trainingListComponent = TrainingListComponent.initAndGet()
             val store = viewModel<TrainingListStore>(
@@ -32,13 +33,23 @@ fun NavGraph(
             )
             TrainingListScreen(
                 store = store,
-                startTraining = { navController.navigate(Destination.TRAINING.value) }
+                startTraining = { trainingInfoId ->
+                    val route = Destination.Training(trainingInfoId = trainingInfoId).route
+                    navController.navigate(route)
+                }
             )
         }
         composable(
-            route = Destination.TRAINING.value,
+            route = Destination.Training().route
         ) {
-            val trainingComponent = remember { TrainingComponent.initAndGet() }
+            val trainingInfoId =
+                it.arguments?.getString(Destination.Training.KEY_TRAINING_INFO_ID)!!
+            val trainingDependencies = object : ITrainingDependencies {
+                override fun provideTrainingInfoId(): TrainingInfoId {
+                    return TrainingInfoId(trainingInfoId)
+                }
+            }
+            val trainingComponent = remember { TrainingComponent.initAndGet(trainingDependencies) }
             val store = viewModel<TrainingStore>(
                 factory = trainingComponent.trainingStoreProvider
             )

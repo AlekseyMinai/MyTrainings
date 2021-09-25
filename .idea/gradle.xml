@@ -12,8 +12,9 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core_dagger_2" />
-            <option value="$PROJECT_DIR$/core_navigation" />
+            <option value="$PROJECT_DIR$/core_training" />
             <option value="$PROJECT_DIR$/core_ui" />
+            <option value="$PROJECT_DIR$/core_utils" />
             <option value="$PROJECT_DIR$/feature_training" />
             <option value="$PROJECT_DIR$/feature_training_list" />
           </set>

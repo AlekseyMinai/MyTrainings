@@ -3,7 +3,10 @@ package com.alexey.minay.feature_training.di
 import com.alexey.minay.feature_training.presentation.TrainingStoreProvider
 import dagger.Component
 
-@Component(modules = [StoreBindings::class, TrainingModule::class])
+@Component(
+    modules = [StoreBindings::class, TrainingModule::class],
+    dependencies = [ITrainingDependencies::class]
+)
 interface TrainingComponent {
 
     val trainingStoreProvider: TrainingStoreProvider
@@ -12,10 +15,12 @@ interface TrainingComponent {
 
         private var mTrainingComponent: TrainingComponent? = null
 
-        fun initAndGet(): TrainingComponent {
-            return mTrainingComponent ?: DaggerTrainingComponent.create().apply {
-                mTrainingComponent = this
-            }
+        fun initAndGet(trainingDependencies: ITrainingDependencies): TrainingComponent {
+            return mTrainingComponent ?: DaggerTrainingComponent
+                .builder()
+                .iTrainingDependencies(trainingDependencies)
+                .build()
+                .apply { mTrainingComponent = this }
         }
 
         fun release() {

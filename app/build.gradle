@@ -45,9 +45,10 @@ android {
 }
 
 dependencies {
-    implementation project(':core_navigation')
+    implementation project(':core_utils')
     implementation project(':core_ui')
     implementation project(':core_dagger_2')
+    implementation project(path: ':core_training')
     implementation project(':feature_training')
     implementation project(':feature_training_list')
 

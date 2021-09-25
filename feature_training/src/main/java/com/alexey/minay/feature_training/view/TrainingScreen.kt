@@ -19,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.alexey.minay.core_navigation.INavigator
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.feature_training.R
 import com.alexey.minay.feature_training.domain.TrainingExercise

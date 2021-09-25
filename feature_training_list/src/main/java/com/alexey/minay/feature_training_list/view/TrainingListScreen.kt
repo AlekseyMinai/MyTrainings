@@ -21,13 +21,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.feature_training_list.domain.TrainingInfo
-import com.alexey.minay.feature_training_list.domain.TrainingInfoId
+import com.alexey.minay.core_training.TrainingInfoId
 import com.alexey.minay.feature_training_list.presentation.TrainingListStore
 
 @Composable
 fun TrainingListScreen(
     store: TrainingListStore,
-    startTraining: (trainingId: TrainingInfoId) -> Unit
+    startTraining: (trainingId: com.alexey.minay.core_training.TrainingInfoId) -> Unit
 ) {
     val state by store.state.collectAsState()
 
@@ -41,7 +41,7 @@ fun TrainingListScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun TrainingList(trainings: List<TrainingInfo>, onClick: (id: TrainingInfoId) -> Unit) {
+private fun TrainingList(trainings: List<TrainingInfo>, onClick: (id: com.alexey.minay.core_training.TrainingInfoId) -> Unit) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2)
     ) {

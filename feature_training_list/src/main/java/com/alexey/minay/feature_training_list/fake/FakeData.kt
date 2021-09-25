@@ -1,16 +1,16 @@
 package com.alexey.minay.feature_training_list.fake
 
 import com.alexey.minay.feature_training_list.domain.TrainingInfo
-import com.alexey.minay.feature_training_list.domain.TrainingInfoId
+import com.alexey.minay.core_training.TrainingInfoId
 import java.util.*
 
 object FakeData {
 
     fun getTrainings() = mutableListOf<TrainingInfo>()
         .apply {
-            add(TrainingInfo(TrainingInfoId("1"), "Грудь и бицепс"))
-            add(TrainingInfo(TrainingInfoId("2"), "Спина и трицепс"))
-            add(TrainingInfo(TrainingInfoId("3"), "Ноги"))
+            add(TrainingInfo(com.alexey.minay.core_training.TrainingInfoId("1"), "Грудь и бицепс"))
+            add(TrainingInfo(com.alexey.minay.core_training.TrainingInfoId("2"), "Спина и трицепс"))
+            add(TrainingInfo(com.alexey.minay.core_training.TrainingInfoId("3"), "Ноги"))
         }
 
 //    fun createTraining(): Training {
