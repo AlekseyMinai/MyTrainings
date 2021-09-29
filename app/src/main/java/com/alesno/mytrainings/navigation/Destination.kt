@@ -1,7 +1,7 @@
 package com.alesno.mytrainings.navigation
 
 import com.alexey.minay.core_navigation.asString
-import com.alexey.minay.core_training.TrainingInfoId
+import com.alexey.minay.core_training.TrainingTypeId
 
 sealed class Destination(
     private val routePart: String,
@@ -12,9 +12,9 @@ sealed class Destination(
 
     object TrainingList : Destination(routePart = "training_list")
 
-    class Training(trainingInfoId: TrainingInfoId? = null) : Destination(
+    class Training(trainingTypeId: TrainingTypeId? = null) : Destination(
         routePart = "training",
-        args = listOf(trainingInfoId?.value ?: "{$KEY_TRAINING_INFO_ID}")
+        args = listOf(trainingTypeId?.value ?: "{$KEY_TRAINING_INFO_ID}")
     ) {
         companion object {
             const val KEY_TRAINING_INFO_ID = "training_info_id"

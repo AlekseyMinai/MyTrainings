@@ -20,14 +20,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alexey.minay.core_ui.Toolbar
-import com.alexey.minay.feature_training_list.domain.TrainingInfo
-import com.alexey.minay.core_training.TrainingInfoId
+import com.alexey.minay.feature_training_list.domain.TrainingType
 import com.alexey.minay.feature_training_list.presentation.TrainingListStore
 
 @Composable
 fun TrainingListScreen(
     store: TrainingListStore,
-    startTraining: (trainingId: com.alexey.minay.core_training.TrainingInfoId) -> Unit
+    startTraining: (trainingId: com.alexey.minay.core_training.TrainingTypeId) -> Unit
 ) {
     val state by store.state.collectAsState()
 
@@ -41,7 +40,7 @@ fun TrainingListScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun TrainingList(trainings: List<TrainingInfo>, onClick: (id: com.alexey.minay.core_training.TrainingInfoId) -> Unit) {
+private fun TrainingList(trainings: List<TrainingType>, onClick: (id: com.alexey.minay.core_training.TrainingTypeId) -> Unit) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2)
     ) {
@@ -54,7 +53,7 @@ private fun TrainingList(trainings: List<TrainingInfo>, onClick: (id: com.alexey
 }
 
 @Composable
-private fun TrainingListItem(trainingInfo: TrainingInfo, onClick: () -> Unit) {
+private fun TrainingListItem(trainingType: TrainingType, onClick: () -> Unit) {
     Box(Modifier.padding(4.dp)) {
         Box(
             modifier = Modifier
@@ -67,7 +66,7 @@ private fun TrainingListItem(trainingInfo: TrainingInfo, onClick: () -> Unit) {
                 .fillMaxSize()
         ) {
             Text(
-                text = trainingInfo.name,
+                text = trainingType.title,
                 modifier = Modifier
                     .padding(start = 8.dp, end = 8.dp, top = 36.dp, bottom = 36.dp)
                     .align(Alignment.Center)

@@ -1,13 +1,16 @@
 package com.alesno.mytrainings.di
 
-import androidx.navigation.NavController
+import android.content.Context
+import com.alexey.minay.core_database.AppDatabase
 import dagger.Component
 
 @Component(
     modules = [AppModule::class],
-    dependencies = [NavController::class]
+    dependencies = [Context::class]
 )
+@AppScope
 interface AppComponent {
 
+    val appDatabase: AppDatabase
 
 }

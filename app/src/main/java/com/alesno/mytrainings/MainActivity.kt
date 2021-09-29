@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.navigation.compose.rememberNavController
-import com.alesno.mytrainings.di.AppComponentHolder
 import com.alesno.mytrainings.navigation.NavGraph
 import com.alexey.minay.core_ui.theme.MyTrainingsTheme
 
@@ -15,10 +14,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             val navController = rememberNavController()
-            val mViewModel by viewModels<AppComponentHolder> {
-                AppComponentHolder.provideFactory(navController)
-            }
 
             MyTrainingsTheme {
                 Column {

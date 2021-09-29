@@ -10,8 +10,6 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -50,5 +48,6 @@ dependencies {
     implementation project(':core_utils')
     implementation project(':core_ui')
     implementation project(':core_dagger_2')
-    implementation project(path: ':core_training')
+    implementation project(':core_training')
+    implementation project(':core_database')
 }
