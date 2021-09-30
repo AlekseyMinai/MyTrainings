@@ -7,7 +7,7 @@ import com.alesno.mytrainings.di.DaggerAppComponent
 
 class MyTrainingsApplication : Application() {
 
-    val appComponent by lazy { DaggerAppComponent.builder().build() }
+    val appComponent by lazy { DaggerAppComponent.builder().context(this).build() }
 
 }
 

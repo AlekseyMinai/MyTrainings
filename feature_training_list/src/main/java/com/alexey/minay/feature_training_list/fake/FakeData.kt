@@ -6,9 +6,9 @@ object FakeData {
 
     fun getTrainings() = mutableListOf<TrainingType>()
         .apply {
-            add(TrainingType(com.alexey.minay.core_training.TrainingTypeId("1"), "Грудь и бицепс"))
-            add(TrainingType(com.alexey.minay.core_training.TrainingTypeId("2"), "Спина и трицепс"))
-            add(TrainingType(com.alexey.minay.core_training.TrainingTypeId("3"), "Ноги"))
+            add(TrainingType(com.alexey.minay.core_training.TrainingTypeId(1), "Грудь и бицепс"))
+            add(TrainingType(com.alexey.minay.core_training.TrainingTypeId(2), "Спина и трицепс"))
+            add(TrainingType(com.alexey.minay.core_training.TrainingTypeId(3), "Ноги"))
         }
 
 //    fun createTraining(): Training {

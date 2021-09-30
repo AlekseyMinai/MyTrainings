@@ -14,7 +14,7 @@ sealed class Destination(
 
     class Training(trainingTypeId: TrainingTypeId? = null) : Destination(
         routePart = "training",
-        args = listOf(trainingTypeId?.value ?: "{$KEY_TRAINING_INFO_ID}")
+        args = listOf(trainingTypeId?.value?.toString() ?: "{$KEY_TRAINING_INFO_ID}")
     ) {
         companion object {
             const val KEY_TRAINING_INFO_ID = "training_info_id"

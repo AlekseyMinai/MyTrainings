@@ -20,7 +20,8 @@ class MainActivity : ComponentActivity() {
             MyTrainingsTheme {
                 Column {
                     NavGraph(
-                        navController = navController
+                        navController = navController,
+                        appComponent = appComponent
                     )
                 }
             }

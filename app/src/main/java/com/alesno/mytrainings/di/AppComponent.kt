@@ -2,15 +2,22 @@ package com.alesno.mytrainings.di
 
 import android.content.Context
 import com.alexey.minay.core_database.AppDatabase
+import dagger.BindsInstance
 import dagger.Component
 
-@Component(
-    modules = [AppModule::class],
-    dependencies = [Context::class]
-)
 @AppScope
+@Component(
+    modules = [AppModule::class]
+)
 interface AppComponent {
 
     val appDatabase: AppDatabase
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun context(context: Context): Builder
+        fun build(): AppComponent
+    }
 
 }
