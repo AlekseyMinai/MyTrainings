@@ -1,6 +1,6 @@
 package com.alesno.mytrainings.navigation
 
-import com.alexey.minay.core_navigation.asString
+import com.alexey.minay.core_utils.asString
 import com.alexey.minay.core_training.TrainingTypeId
 
 sealed class Destination(

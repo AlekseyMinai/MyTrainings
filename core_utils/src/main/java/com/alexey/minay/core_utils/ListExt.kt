@@ -1,4 +1,4 @@
-package com.alexey.minay.core_navigation
+package com.alexey.minay.core_utils
 
 fun <T>List<T>.asString(decorate: (String) -> String = { it }) : String {
     var sum = ""

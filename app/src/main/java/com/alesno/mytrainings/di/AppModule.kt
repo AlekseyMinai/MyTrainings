@@ -2,9 +2,8 @@ package com.alesno.mytrainings.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.alexey.minay.core_database.AppDatabase
+import com.alexey.minay.core_utils.CoroutineDispatchersProvider
 import dagger.Module
 import dagger.Provides
 
@@ -18,5 +17,9 @@ class AppModule {
             .createFromAsset("init_data.db")
             .build()
     }
+
+    @Provides
+    @AppScope
+    fun provideCoroutineDispatcherProvider() = CoroutineDispatchersProvider()
 
 }

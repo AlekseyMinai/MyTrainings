@@ -35,6 +35,9 @@ fun NavGraph(
                     override fun provideTrainingListDao() =
                         appComponent.appDatabase.getTrainingListDao()
 
+                    override fun provideCoroutineDispatchersProvider() =
+                        appComponent.coroutineDispatchersProvider
+
                 }
                 TrainingListComponent.initAndGet(trainingListDependency)
             }

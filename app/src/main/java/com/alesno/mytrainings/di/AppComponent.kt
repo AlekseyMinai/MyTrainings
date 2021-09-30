@@ -2,6 +2,7 @@ package com.alesno.mytrainings.di
 
 import android.content.Context
 import com.alexey.minay.core_database.AppDatabase
+import com.alexey.minay.core_utils.CoroutineDispatchersProvider
 import dagger.BindsInstance
 import dagger.Component
 
@@ -12,6 +13,7 @@ import dagger.Component
 interface AppComponent {
 
     val appDatabase: AppDatabase
+    val coroutineDispatchersProvider: CoroutineDispatchersProvider
 
     @Component.Builder
     interface Builder {
