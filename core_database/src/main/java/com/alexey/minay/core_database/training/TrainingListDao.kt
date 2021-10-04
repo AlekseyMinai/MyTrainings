@@ -1,14 +1,15 @@
-package com.alexey.minay.core_database.training_list
+package com.alexey.minay.core_database.training
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.alexey.minay.core_database.training.entities.TrainingTypeDb
 
 @Dao
 interface TrainingListDao {
     @Insert
     fun insert(trainingInoList: List<TrainingTypeDb>)
 
-    @Query("SELECT * FROM TrainingTypeDb")
+    @Query("SELECT * FROM TrainingTypes")
     fun getAll(): List<TrainingTypeDb>
 }

@@ -61,7 +61,7 @@ fun TrainingExercises(
 @Composable
 fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (TrainingExerciseId) -> Unit) {
     Text(
-        text = exercise.info.name,
+        text = exercise.name,
         color = Color.White,
         modifier = Modifier.padding(start = 16.dp, top = 16.dp)
     )
