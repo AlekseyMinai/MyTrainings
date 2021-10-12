@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.feature_training.R
 import com.alexey.minay.feature_training.domain.TrainingExercise
-import com.alexey.minay.feature_training.domain.TrainingExerciseId
+import com.alexey.minay.feature_training.domain.ExerciseId
 import com.alexey.minay.feature_training.domain.TrainingSet
 import com.alexey.minay.feature_training.presentation.TrainingIntent
 import com.alexey.minay.feature_training.presentation.TrainingStore
@@ -36,11 +36,11 @@ fun TrainingScreen(
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Toolbar(
-            title = state.training?.name ?: ""
+            title = state.training.name
         ) {
             onBackPressed()
         }
-        TrainingExercises(exercises = state.training?.exercises ?: emptyList()) {
+        TrainingExercises(exercises = state.training.exercises) {
             store.accept(TrainingIntent.AddSet(it, 50, 12))
         }
     }
@@ -49,7 +49,7 @@ fun TrainingScreen(
 @Composable
 fun TrainingExercises(
     exercises: List<TrainingExercise>,
-    onNewSetClicked: (TrainingExerciseId) -> Unit
+    onNewSetClicked: (ExerciseId) -> Unit
 ) {
     LazyColumn {
         items(exercises.size) { index ->
@@ -59,7 +59,7 @@ fun TrainingExercises(
 }
 
 @Composable
-fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (TrainingExerciseId) -> Unit) {
+fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (ExerciseId) -> Unit) {
     Text(
         text = exercise.name,
         color = Color.White,

@@ -4,6 +4,7 @@ import com.alexey.minay.core_database.training.TrainingListDao
 import com.alexey.minay.core_database.training.entities.TrainingTypeDb
 import com.alexey.minay.core_utils.CoroutineDispatchersProvider
 import com.alexey.minay.feature_training_list.domain.ITrainingListRepository
+import com.alexey.minay.feature_training_list.domain.TrainingType
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

@@ -2,16 +2,19 @@ package com.alexey.minay.feature_training.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.alexey.minay.feature_training.data.TrainingRepository
 import javax.inject.Inject
 
 
 class TrainingStoreProvider @Inject constructor(
-    private val trainingState: TrainingState
+    private val trainingState: TrainingState,
+    private val repository: TrainingRepository
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return TrainingStore(
-            initialState = trainingState
+            initialState = trainingState,
+            repository = repository
         ) as T
     }
 

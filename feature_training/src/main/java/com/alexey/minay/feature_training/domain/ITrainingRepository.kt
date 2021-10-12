@@ -4,8 +4,8 @@ import com.alexey.minay.core_training.TrainingTypeId
 import kotlinx.coroutines.flow.Flow
 
 interface ITrainingRepository {
-    fun createTraining(trainingTypeId: TrainingTypeId): Flow<Training>
-    fun createSet(exerciseId: TrainingExerciseId, trainingSet: TrainingSet)
-    fun updateSet(exerciseId: TrainingExerciseId, setId: TrainingSetId, trainingSet: TrainingSet)
-    fun deleteSet(exerciseId: TrainingExerciseId, setId: TrainingSetId)
+    suspend fun createTraining(trainingTypeId: TrainingTypeId): Flow<Training>
+    suspend fun createSet(trainingId: TrainingId, exerciseId: ExerciseId, weight: Int, count: Int)
+    fun updateSet(setId: TrainingSetId, weight: Int, count: Int)
+    fun deleteSet(setId: TrainingSetId)
 }

@@ -4,7 +4,7 @@ import com.alexey.minay.feature_training.presentation.TrainingStoreProvider
 import dagger.Component
 
 @Component(
-    modules = [StoreBindings::class, TrainingModule::class],
+    modules = [StoreBindings::class, TrainingModule::class, TrainingBinding::class],
     dependencies = [ITrainingDependencies::class]
 )
 interface TrainingComponent {

@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 data class ExerciseSetDb(
     val weight: Int,
     val count: Int,
-    val exerciseDb: Long
+    val exerciseId: Long,
+    val trainingId: Long
 ) {
     @PrimaryKey(autoGenerate = true)
     var setId: Long = 0
