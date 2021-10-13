@@ -3,10 +3,10 @@ package com.alexey.minay.core_database.training.entities
 import androidx.room.Entity
 
 @Entity(
-    primaryKeys = ["trainingTypeId", "exerciseId"],
-    tableName = "TrainingTypesExercisesCrossRef"
+    tableName = "TrainingTypesExercisesCrossRef",
+    primaryKeys = ["exerciseId", "trainingTypeId"]
 )
 data class TrainingTypeExercisesCrossRefDb(
-    val trainingTypeId: Long,
-    val exerciseId: Long
+    val exerciseId: Long,
+    val trainingTypeId: Long
 )

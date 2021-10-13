@@ -8,7 +8,7 @@ import com.alexey.minay.core_database.training.entities.*
 data class TrainingWithExercisesAndSets(
     @Embedded
     val training: TrainingDb,
-    @Relation(parentColumn = "trainingId", entityColumn = "trainingTypeId")
+    @Relation(parentColumn = "trainingTypeId", entityColumn = "trainingTypeId")
     val trainingType: TrainingTypeDb,
     @Relation(
         parentColumn = "trainingTypeId",
@@ -21,6 +21,6 @@ data class TrainingWithExercisesAndSets(
         entity = ExerciseDb::class
     )
     val exercises: List<ExerciseDb>,
-    @Relation(parentColumn = "trainingId", entityColumn = "setId")
+    @Relation(parentColumn = "trainingId", entityColumn = "trainingId")
     val sets: List<ExerciseSetDb>
 )
