@@ -57,9 +57,9 @@ fun NavGraph(
         ) {
             val trainingComponent = remember {
                 val trainingInfoId =
-                    it.arguments?.getLong(Destination.Training.KEY_TRAINING_INFO_ID)!!
+                    it.arguments?.getString(Destination.Training.KEY_TRAINING_INFO_ID)
                 val trainingDependencies = object : ITrainingDependencies {
-                    override fun provideTrainingInfoId() = TrainingTypeId(trainingInfoId)
+                    override fun provideTrainingInfoId() = TrainingTypeId(trainingInfoId!!.toLong())
                     override fun provideTrainingDao() = appComponent.appDatabase.getTrainingDao()
                 }
                 TrainingComponent.initAndGet(trainingDependencies)

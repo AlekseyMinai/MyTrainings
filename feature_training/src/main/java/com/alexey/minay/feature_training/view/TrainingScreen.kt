@@ -117,7 +117,7 @@ fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
                 modifier = Modifier.size(48.dp),
                 shape = CircleShape,
                 elevation = 2.dp,
-                backgroundColor = MaterialTheme.colors.onSurface
+                backgroundColor = Color.LightGray
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_gym_dumbbell),
@@ -125,7 +125,7 @@ fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp)
+                        .padding(12.dp)
                 )
             }
         }
