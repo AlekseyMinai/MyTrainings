@@ -1,6 +1,7 @@
 package com.alexey.minay.feature_training.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -15,17 +16,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.alexey.minay.core_ui.Toolbar
+import com.alexey.minay.core_ui.theme.Purple200
 import com.alexey.minay.feature_training.R
-import com.alexey.minay.feature_training.domain.TrainingExercise
 import com.alexey.minay.feature_training.domain.ExerciseId
+import com.alexey.minay.feature_training.domain.TrainingExercise
 import com.alexey.minay.feature_training.domain.TrainingSet
 import com.alexey.minay.feature_training.presentation.TrainingIntent
+import com.alexey.minay.feature_training.presentation.TrainingState
 import com.alexey.minay.feature_training.presentation.TrainingStore
+import com.alexey.minay.core_ui.R as coreUiR
 
 @Composable
 fun TrainingScreen(
@@ -34,20 +39,43 @@ fun TrainingScreen(
 ) {
     val state by store.state.collectAsState()
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    when (state.type) {
+        TrainingState.Type.DEFAULT -> Unit
+        TrainingState.Type.EDIT_SET -> EditSetDialog(
+            state = state.editSetDialogState!!,
+            onWeightChanged = { store.accept(TrainingIntent.ChangeWeight(it)) },
+            onCountChanged = { store.accept(TrainingIntent.ChangeCount(it)) },
+            onConfirm = { store.accept(TrainingIntent.AddSet) }
+        )
+    }
+    Training(state, onBackPressed = onBackPressed) {
+        store.accept(TrainingIntent.OpenEditSetDialog(it))
+    }
+}
+
+@Composable
+fun Training(
+    state: TrainingState,
+    onBackPressed: () -> Unit,
+    onNewSetClicked: (ExerciseId) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = coreUiR.color.light_grey))
+    ) {
         Toolbar(
             title = state.training.name
         ) {
             onBackPressed()
         }
-        TrainingExercises(exercises = state.training.exercises) {
-            store.accept(TrainingIntent.AddSet(it, 50, 12))
-        }
+
+        TrainingExercises(exercises = state.training.exercises, onNewSetClicked = onNewSetClicked)
     }
 }
 
 @Composable
-fun TrainingExercises(
+private fun TrainingExercises(
     exercises: List<TrainingExercise>,
     onNewSetClicked: (ExerciseId) -> Unit
 ) {
@@ -59,14 +87,15 @@ fun TrainingExercises(
 }
 
 @Composable
-fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (ExerciseId) -> Unit) {
+private fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (ExerciseId) -> Unit) {
     Text(
         text = exercise.name,
         modifier = Modifier.padding(start = 16.dp, top = 16.dp)
     )
     Card(
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = Color.White,
+        elevation = 4.dp,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
@@ -79,7 +108,7 @@ fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (ExerciseId) -
                     start.linkTo(parent.start)
                     end.linkTo(button.start, margin = 8.dp)
                     top.linkTo(parent.top)
-                    width = Dimension.preferredWrapContent
+                    width = Dimension.fillToConstraints
                 }
             )
             Box(
@@ -107,7 +136,7 @@ fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (ExerciseId) -
 }
 
 @Composable
-fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
+private fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
     LazyRow(modifier = modifier) {
         item {
             Spacer(modifier = Modifier.width(8.dp))
@@ -117,7 +146,7 @@ fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
                 modifier = Modifier.size(48.dp),
                 shape = CircleShape,
                 elevation = 2.dp,
-                backgroundColor = Color.LightGray
+                backgroundColor = Purple200
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_gym_dumbbell),
@@ -147,7 +176,7 @@ fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
 }
 
 @Composable
-fun TrainingSet(trainingSet: TrainingSet) {
+private fun TrainingSet(trainingSet: TrainingSet) {
     Column(Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp)) {
         Text(
             text = trainingSet.weight.toString(),

@@ -3,11 +3,23 @@ package com.alexey.minay.feature_training.presentation
 import com.alexey.minay.feature_training.domain.ExerciseId
 
 sealed interface TrainingIntent {
-    class AddSet(
-        val exerciseId: ExerciseId,
-        val weight: Int,
+    object AddSet : TrainingIntent
+
+    class OpenEditSetDialog(
+        val exerciseId: ExerciseId
+    ) : TrainingIntent
+
+    class ChangeWeight(
+        val weight: Int
+    ) : TrainingIntent
+
+    class ChangeCount(
         val count: Int
     ) : TrainingIntent
 }
 
-sealed interface TrainingEvent
+sealed interface TrainingEvent {
+/*    class OpenEditSetDialog(
+        val exerciseId: ExerciseId
+    ) : TrainingEvent*/
+}
