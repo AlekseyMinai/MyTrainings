@@ -1,16 +1,16 @@
 package com.alesno.mytrainings.navigation
 
-import com.alexey.minay.core_utils.asString
+import androidx.annotation.DrawableRes
+import com.alesno.mytrainings.R
 import com.alexey.minay.core_training.TrainingTypeId
+import com.alexey.minay.core_utils.asString
 
 sealed class Destination(
-    private val routePart: String,
-    private var args: List<String> = emptyList()
+    private var args: List<String> = emptyList(),
+    val routePart: String
 ) {
 
-    val route: String get() = routePart + args.asString { "/$it" }
-
-    object TrainingList : Destination(routePart = "training_list")
+    open val route: String get() = routePart + args.asString { "/$it" }
 
     class Training(trainingTypeId: TrainingTypeId? = null) : Destination(
         routePart = "training",
@@ -19,6 +19,20 @@ sealed class Destination(
         companion object {
             const val KEY_TRAINING_INFO_ID = "training_info_id"
         }
+    }
+
+    class Home(val item: HomeItem) : Destination(routePart = "home") {
+        override val route: String
+            get() = routePart + "/" + item.routePart
+    }
+
+    enum class HomeItem(
+        val routePart: String,
+        @DrawableRes val iconRes: Int,
+        val title: String
+        ) {
+        TRAINING_LIST("training list", R.drawable.ic_home, "Тренировки"),
+        HISTORY("history", R.drawable.ic_history, "История")
     }
 
 }
