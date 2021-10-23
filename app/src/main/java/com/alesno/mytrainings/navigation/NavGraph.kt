@@ -7,13 +7,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.alesno.mytrainings.HistoryScreen
 import com.alesno.mytrainings.di.AppComponent
+import com.alexey.minay.core_database.training.ITrainingHistoryDao
 import com.alexey.minay.core_training.TrainingTypeId
 import com.alexey.minay.feature_training.di.ITrainingDependencies
 import com.alexey.minay.feature_training.di.TrainingComponent
 import com.alexey.minay.feature_training.presentation.TrainingStore
 import com.alexey.minay.feature_training.view.TrainingScreen
+import com.alexey.minay.feature_training_history.di.ITrainingHistoryDependencies
+import com.alexey.minay.feature_training_history.di.TrainingHistoryComponent
+import com.alexey.minay.feature_training_history.presentation.TrainingHistoryStore
+import com.alexey.minay.feature_training_history.ui.TrainingHistory
 import com.alexey.minay.feature_training_list.di.TrainingListComponent
 import com.alexey.minay.feature_training_list.di.TrainingListDependency
 import com.alexey.minay.feature_training_list.presentation.TrainingListStore
@@ -61,7 +65,21 @@ fun NavGraph(
             composable(
                 route = Destination.Home(Destination.HomeItem.HISTORY).route
             ) {
-                HistoryScreen()
+                val trainingHistoryComponent = remember {
+                    val dependencies = object : ITrainingHistoryDependencies {
+                        override fun provideTrainingHistoryDao(): ITrainingHistoryDao {
+                            return appComponent.appDatabase.getTrainingHistoryDao()
+                        }
+                    }
+                    TrainingHistoryComponent.initAndGet(dependencies)
+                }
+                val store = viewModel<TrainingHistoryStore>(
+                    factory = trainingHistoryComponent.trainingHistoryStoreFactory
+                )
+                TrainingHistory(
+                    store = store,
+                    startTraining = {}
+                )
             }
         }
 

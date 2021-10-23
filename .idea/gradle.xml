@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/core_ui" />
             <option value="$PROJECT_DIR$/core_utils" />
             <option value="$PROJECT_DIR$/feature_training" />
+            <option value="$PROJECT_DIR$/feature_training_history" />
             <option value="$PROJECT_DIR$/feature_training_list" />
           </set>
         </option>

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MyTrainings</string>
     <string name="training_list">Список тренировок</string>
+    <string name="training_history">История тренировок</string>
 </resources>

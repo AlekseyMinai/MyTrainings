@@ -1,5 +1,6 @@
 package com.alexey.minay.feature_training.data
 
+import com.alexey.minay.core_training.TrainingId
 import com.alexey.minay.core_training.TrainingTypeId
 import com.alexey.minay.feature_training.domain.*
 import kotlinx.coroutines.Dispatchers

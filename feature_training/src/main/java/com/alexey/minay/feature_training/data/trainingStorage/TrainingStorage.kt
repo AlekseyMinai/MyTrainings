@@ -1,20 +1,20 @@
 package com.alexey.minay.feature_training.data.trainingStorage
 
-import com.alexey.minay.core_database.training.TrainingDao
+import com.alexey.minay.core_database.training.ITrainingDao
 import com.alexey.minay.core_database.training.entities.ExerciseSetDb
 import com.alexey.minay.core_database.training.entities.TrainingDb
 import com.alexey.minay.core_training.TrainingTypeId
 import com.alexey.minay.feature_training.data.ITrainingStorage
 import com.alexey.minay.feature_training.domain.ExerciseId
 import com.alexey.minay.feature_training.domain.Training
-import com.alexey.minay.feature_training.domain.TrainingId
+import com.alexey.minay.core_training.TrainingId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
 import javax.inject.Inject
 
 class TrainingStorage @Inject constructor(
-    private val trainingDao: TrainingDao
+    private val trainingDao: ITrainingDao
 ) : ITrainingStorage {
 
     override fun createTraining(trainingTypeId: TrainingTypeId): TrainingId {

@@ -6,7 +6,7 @@ import androidx.room.Query
 import com.alexey.minay.core_database.training.entities.TrainingTypeDb
 
 @Dao
-interface TrainingListDao {
+interface ITrainingListDao {
     @Insert
     fun insert(trainingInoList: List<TrainingTypeDb>)
 

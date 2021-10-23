@@ -3,6 +3,7 @@ package com.alexey.minay.feature_training.data.trainingStorage
 import com.alexey.minay.core_database.training.entities.ExerciseSetDb
 import com.alexey.minay.core_database.training.TrainingWithExercisesAndSets
 import com.alexey.minay.core_database.training.entities.ExerciseDb
+import com.alexey.minay.core_training.TrainingId
 import com.alexey.minay.core_training.TrainingTypeId
 import com.alexey.minay.feature_training.domain.*
 import java.util.*

@@ -8,7 +8,7 @@ import com.alexey.minay.core_database.training.entities.TrainingDb
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TrainingDao {
+interface ITrainingDao {
     @Insert
     fun insertTraining(training: TrainingDb): Long
 
