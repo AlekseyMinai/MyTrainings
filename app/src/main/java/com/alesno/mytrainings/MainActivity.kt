@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 Destination.Home(Destination.HomeItem.HISTORY)
             )
 
-            MyTrainingsTheme {
+            MyTrainingsTheme(window = window) {
                 Scaffold(bottomBar = {
                     TrainingBottomBar(navController = navController, items = bottomNavigationItems)
                 }) {

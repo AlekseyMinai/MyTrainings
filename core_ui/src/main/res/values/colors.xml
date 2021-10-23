@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_grey">#EDEBE8</color>
+    <color name="PageBackground1">#498CD2</color>
+    <color name="PageBackground2">#7E69BC</color>
+    <color name="CardBackground">#22FFFFFF</color>
+    <color name="CardContent">#FFFFFF</color>
 </resources>
