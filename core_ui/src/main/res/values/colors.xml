@@ -12,4 +12,5 @@
     <color name="PageBackground2">#7E69BC</color>
     <color name="CardBackground">#22FFFFFF</color>
     <color name="CardContent">#FFFFFF</color>
+    <color name="PageTextColor">#FFFFFF</color>
 </resources>

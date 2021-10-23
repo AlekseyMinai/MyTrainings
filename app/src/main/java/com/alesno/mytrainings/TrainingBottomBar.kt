@@ -1,18 +1,17 @@
 package com.alesno.mytrainings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.alesno.mytrainings.navigation.Destination
-import com.alexey.minay.core_ui.theme.Purple700
+import com.alexey.minay.core_ui.R
 
 @Composable
 fun TrainingBottomBar(
@@ -28,7 +27,8 @@ fun TrainingBottomBar(
         Divider()
 
         BottomNavigation(
-            elevation = 5.dp
+            elevation = 100.dp, // TODO: 23.10.2021 Подумать как сделать лучше
+            backgroundColor = Color.Transparent
         ) {
             items.forEach { screen ->
                 val isSelected = currentRote == screen.route
@@ -53,9 +53,8 @@ fun TrainingBottomBar(
                             contentDescription = screen.item.name,
                         )
                     },
-                    modifier = Modifier.background(Color.White),
-                    selectedContentColor = Purple700,
-                    unselectedContentColor = Purple700.copy(alpha = 0.4f)
+                    selectedContentColor = colorResource(id = R.color.PageTextColor),
+                    unselectedContentColor = colorResource(id = R.color.PageTextColor).copy(alpha = 0.4f)
                 )
             }
         }

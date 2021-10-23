@@ -59,7 +59,7 @@ fun Toolbar2(
             text = title,
             color = colorResource(id = R.color.white),
             modifier = Modifier.align(Alignment.CenterStart),
-            fontSize = 18.sp
+            fontSize = 20.sp
         )
         Card(
             modifier = Modifier.size(36.dp)

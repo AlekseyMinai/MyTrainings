@@ -86,14 +86,12 @@ private fun TrainingListItem(trainingType: TrainingType, onClick: () -> Unit) {
                     .fillMaxHeight()
                     .width(110.dp)
             )
-            Box {
-                Text(
-                    text = trainingType.title,
-                    modifier = Modifier
-                        .padding(horizontal = 12.dp, vertical = 12.dp),
-                    color = colorResource(id = RCoreUi.color.CardContent)
-                )
-            }
+            Text(
+                text = trainingType.title,
+                modifier = Modifier
+                    .padding(horizontal = 12.dp, vertical = 12.dp),
+                color = colorResource(id = RCoreUi.color.CardContent)
+            )
         }
     }
 }
