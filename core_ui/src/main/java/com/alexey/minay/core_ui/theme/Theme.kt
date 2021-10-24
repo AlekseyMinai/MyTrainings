@@ -6,8 +6,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
+import androidx.core.view.WindowCompat
 import com.alexey.minay.core_ui.R
 
 private val DarkColorPalette = darkColors(
@@ -34,7 +36,9 @@ fun MyTrainingsTheme(
         LightColorPalette
     }
 
-    window.statusBarColor = colorResource(id = R.color.PageBackground1).toArgb()
+    // TODO: 24.10.2021 Что будет на старых android?
+    WindowCompat.setDecorFitsSystemWindows(window, false)
+    window.statusBarColor = colorResource(id = R.color.CardBackground).toArgb()
 
     MaterialTheme(
         colors = colors,

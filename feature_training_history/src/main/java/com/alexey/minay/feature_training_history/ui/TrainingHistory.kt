@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alexey.minay.core_training.TrainingId
 import com.alexey.minay.core_ui.Toolbar2
+import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.core_utils.toStringFormat
 import com.alexey.minay.feature_training_history.R
 import com.alexey.minay.feature_training_history.domain.Training
@@ -38,12 +39,7 @@ fun TrainingHistory(
     Column(
         modifier = Modifier
             .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        colorResource(id = RCoreUi.color.PageBackground1),
-                        colorResource(id = RCoreUi.color.PageBackground2),
-                    )
-                )
+                brush = gradientColor()
             )
             .fillMaxSize()
     ) {

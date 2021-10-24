@@ -45,4 +45,8 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     api 'androidx.activity:activity-compose:1.4.0-alpha02'
     api "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
+
+    //api "com.google.accompanist:accompanist-systemuicontroller:0.20.0"
+    api "com.google.accompanist:accompanist-insets:0.20.0"
+    //api "com.google.accompanist:accompanist-insets-ui:0.20.0"
 }

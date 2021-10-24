@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -14,14 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.alexey.minay.core_ui.Toolbar
+import com.alexey.minay.core_ui.CollapsingToolbar
+import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.core_ui.theme.Purple200
 import com.alexey.minay.feature_training.R
 import com.alexey.minay.feature_training.domain.ExerciseId
@@ -30,7 +33,7 @@ import com.alexey.minay.feature_training.domain.TrainingSet
 import com.alexey.minay.feature_training.presentation.TrainingIntent
 import com.alexey.minay.feature_training.presentation.TrainingState
 import com.alexey.minay.feature_training.presentation.TrainingStore
-import com.alexey.minay.core_ui.R as coreUiR
+import com.alexey.minay.core_ui.R as RCoreUi
 
 @Composable
 fun TrainingScreen(
@@ -62,24 +65,28 @@ fun Training(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = coreUiR.color.light_grey))
+            .background(brush = gradientColor())
     ) {
-        Toolbar(
-            title = state.training.name
-        ) {
-            onBackPressed()
-        }
-
-        TrainingExercises(exercises = state.training.exercises, onNewSetClicked = onNewSetClicked)
+        TrainingExercises(
+            exercises = state.training.exercises,
+            onNewSetClicked = onNewSetClicked,
+            onBackPressed = onBackPressed
+        )
     }
 }
 
 @Composable
 private fun TrainingExercises(
     exercises: List<TrainingExercise>,
-    onNewSetClicked: (ExerciseId) -> Unit
+    onNewSetClicked: (ExerciseId) -> Unit,
+    onBackPressed: () -> Unit,
 ) {
-    LazyColumn {
+    val lazyListState = rememberLazyListState()
+
+    LazyColumn(
+        state = lazyListState, modifier = Modifier
+            .fillMaxSize()
+    ) {
         items(exercises.size) { index ->
             TrainingExercise(exercise = exercises[index], onNewSetClicked)
         }
@@ -90,17 +97,20 @@ private fun TrainingExercises(
 private fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (ExerciseId) -> Unit) {
     Text(
         text = exercise.name,
-        modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+        modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+        color = colorResource(id = RCoreUi.color.PageTextColor)
     )
     Card(
-        shape = RoundedCornerShape(8.dp),
-        backgroundColor = Color.White,
-        elevation = 4.dp,
         modifier = Modifier
-            .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .fillMaxWidth(),
+        backgroundColor = colorResource(id = RCoreUi.color.CardBackground),
+        elevation = 0.dp
     ) {
-        ConstraintLayout(Modifier.padding(top = 16.dp, bottom = 12.dp)) {
+        ConstraintLayout(
+            Modifier.padding(top = 16.dp, bottom = 12.dp)
+        ) {
             val (list, button) = createRefs()
             TrainingSets(
                 trainingSets = exercise.sets,
@@ -163,9 +173,13 @@ private fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
                 Column(Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp)) {
                     Text(
                         text = "Вес",
-                        modifier = Modifier.padding(bottom = 6.dp)
+                        modifier = Modifier.padding(bottom = 6.dp),
+                        color = colorResource(id = RCoreUi.color.PageTextColor)
                     )
-                    Text(text = "Подходы")
+                    Text(
+                        text = "Подходы",
+                        color = colorResource(id = RCoreUi.color.PageTextColor)
+                    )
                 }
             }
         }
@@ -180,8 +194,12 @@ private fun TrainingSet(trainingSet: TrainingSet) {
     Column(Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp)) {
         Text(
             text = trainingSet.weight.toString(),
-            modifier = Modifier.padding(bottom = 6.dp)
+            modifier = Modifier.padding(bottom = 6.dp),
+            color = colorResource(id = RCoreUi.color.PageTextColor)
         )
-        Text(text = trainingSet.count.toString())
+        Text(
+            text = trainingSet.count.toString(),
+            color = colorResource(id = RCoreUi.color.PageTextColor)
+        )
     }
 }

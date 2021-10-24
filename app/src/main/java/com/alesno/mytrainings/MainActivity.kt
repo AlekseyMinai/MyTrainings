@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.alesno.mytrainings.navigation.Destination
 import com.alesno.mytrainings.navigation.NavGraph
 import com.alexey.minay.core_ui.theme.MyTrainingsTheme
+import com.google.accompanist.insets.ProvideWindowInsets
 
 class MainActivity : ComponentActivity() {
 
@@ -22,13 +23,18 @@ class MainActivity : ComponentActivity() {
             )
 
             MyTrainingsTheme(window = window) {
-                Scaffold(bottomBar = {
-                    TrainingBottomBar(navController = navController, items = bottomNavigationItems)
-                }) {
-                    NavGraph(
-                        navController = navController,
-                        appComponent = appComponent
-                    )
+                ProvideWindowInsets {
+                    Scaffold(bottomBar = {
+                        TrainingBottomBar(
+                            navController = navController,
+                            items = bottomNavigationItems
+                        )
+                    }) {
+                        NavGraph(
+                            navController = navController,
+                            appComponent = appComponent
+                        )
+                    }
                 }
             }
         }

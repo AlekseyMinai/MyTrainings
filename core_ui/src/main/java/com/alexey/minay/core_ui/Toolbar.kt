@@ -11,14 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alexey.minay.core_ui.theme.Purple200
+import com.google.accompanist.insets.LocalWindowInsets
 
 @Composable
 fun Toolbar(
@@ -50,10 +53,14 @@ fun Toolbar2(
     hasNavIcon: Boolean = false,
     onBackPressed: () -> Unit = {}
 ) {
+    val insets = LocalWindowInsets.current
+    val topInset = with(LocalDensity.current) { insets.statusBars.top.toDp() }
+
     Box(
-        modifier = Modifier.height(52.dp)
+        modifier = Modifier.height(52.dp + topInset)
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
+            .padding(top = topInset)
     ) {
         Text(
             text = title,

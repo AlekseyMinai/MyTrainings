@@ -1,34 +1,38 @@
 package com.alesno.mytrainings
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.alesno.mytrainings.navigation.Destination
 import com.alexey.minay.core_ui.R
+import com.google.accompanist.insets.LocalWindowInsets
 
 @Composable
 fun TrainingBottomBar(
     navController: NavController,
     items: List<Destination.Home>
 ) {
+    val insets = LocalWindowInsets.current
+    val bottomInset = with(LocalDensity.current) { insets.navigationBars.bottom.toDp() }
+
     val currentRote = currentRote(navController = navController)
     // TODO: 23.10.2021 Подумать как сделать лучше
     if (currentRote?.startsWith("home") == false) {
         return
     }
-    Column {
+    Column(modifier = Modifier.padding(bottom = bottomInset)) {
         Divider()
 
         BottomNavigation(
-            elevation = 100.dp, // TODO: 23.10.2021 Подумать как сделать лучше
-            backgroundColor = Color.Transparent
+            backgroundColor = colorResource(id = R.color.PageBackground2)
         ) {
             items.forEach { screen ->
                 val isSelected = currentRote == screen.route

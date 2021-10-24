@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alexey.minay.core_ui.Toolbar2
+import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.feature_training_list.domain.TrainingType
 import com.alexey.minay.feature_training_list.presentation.TrainingListStore
 import com.alexey.minay.core_ui.R as RCoreUi
@@ -34,12 +35,7 @@ fun TrainingListScreen(
     Column(
         modifier = Modifier
             .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        colorResource(id = RCoreUi.color.PageBackground1),
-                        colorResource(id = RCoreUi.color.PageBackground2),
-                    )
-                )
+                brush = gradientColor()
             )
             .fillMaxSize()
     ) {
