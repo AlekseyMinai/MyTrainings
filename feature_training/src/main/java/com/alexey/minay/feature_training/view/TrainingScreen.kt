@@ -50,7 +50,8 @@ fun TrainingScreen(
             state = state.editSetDialogState!!,
             onWeightChanged = { store.accept(TrainingIntent.ChangeWeight(it)) },
             onCountChanged = { store.accept(TrainingIntent.ChangeCount(it)) },
-            onConfirm = { store.accept(TrainingIntent.AddSet) }
+            onConfirm = { store.accept(TrainingIntent.AddSet) },
+            onDismiss = { store.accept(TrainingIntent.CancelAddingSet) }
         )
     }
     Training(state, onBackPressed = onBackPressed) {
@@ -176,7 +177,9 @@ private fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (Exerc
                 Button(
                     onClick = { onNewSetClicked(exercise.id) },
                     shape = CircleShape,
-                    modifier = Modifier.size(42.dp)
+                    modifier = Modifier
+                        .size(42.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Purple200)
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -228,7 +231,7 @@ private fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
             }
         }
         items(trainingSets.size) { index ->
-            TrainingSet(trainingSets[index])
+            TrainingSet(trainingSets[trainingSets.lastIndex - index])
         }
     }
 }
@@ -237,7 +240,10 @@ private fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
 private fun TrainingSet(trainingSet: TrainingSet) {
     Column(Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp)) {
         Text(
-            text = trainingSet.weight.toString(),
+            text = when {
+                (trainingSet.weight % 1) == 0f -> trainingSet.weight.toInt().toString()
+                else -> trainingSet.weight.toString()
+            },
             modifier = Modifier.padding(bottom = 6.dp),
             color = colorResource(id = RCoreUi.color.PageTextColor)
         )

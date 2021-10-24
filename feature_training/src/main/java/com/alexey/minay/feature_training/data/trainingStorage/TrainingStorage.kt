@@ -29,7 +29,7 @@ class TrainingStorage @Inject constructor(
         return trainingDao.getById(trainingId.value).map { it.toDomain() }
     }
 
-    override fun addSet(trainingId: TrainingId, exerciseId: ExerciseId, weight: Int, count: Int) {
+    override fun addSet(trainingId: TrainingId, exerciseId: ExerciseId, weight: Float, count: Int) {
         val setDb = ExerciseSetDb(
             weight = weight,
             count = count,

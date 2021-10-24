@@ -5,6 +5,6 @@ import com.alexey.minay.feature_training.domain.ExerciseId
 data class EditSetDialogState(
     val exerciseId: ExerciseId,
     val isEditing: Boolean,
-    val weight: Int?,
-    val count: Int?
+    val weight: String?,
+    val count: String?
 )

@@ -22,7 +22,7 @@ class TrainingRepository @Inject constructor(
     override suspend fun createSet(
         trainingId: TrainingId,
         exerciseId: ExerciseId,
-        weight: Int,
+        weight: Float,
         count: Int
     ) {
         withContext(Dispatchers.IO) {
@@ -30,7 +30,7 @@ class TrainingRepository @Inject constructor(
         }
     }
 
-    override fun updateSet(setId: TrainingSetId, weight: Int, count: Int) {
+    override fun updateSet(setId: TrainingSetId, weight: Float, count: Int) {
         TODO("Not yet implemented")
     }
 

@@ -25,14 +25,22 @@ class TrainingStore @Inject constructor(
 
     override suspend fun execute(intent: TrainingIntent) {
         when (intent) {
-            is TrainingIntent.AddSet -> {
+            TrainingIntent.AddSet -> {
                 repository.createSet(
                     trainingId = state.value.training.id,
                     exerciseId = state.value.editSetDialogState!!.exerciseId,
-                    weight = state.value.editSetDialogState?.weight!!,
-                    count = state.value.editSetDialogState?.count!!
+                    weight = state.value.editSetDialogState?.weight?.toFloatOrNull() ?: return,
+                    count = state.value.editSetDialogState?.count?.toIntOrNull() ?: return
                 )
                 modify { copy(type = TrainingState.Type.DEFAULT) }
+            }
+            TrainingIntent.CancelAddingSet -> {
+                modify {
+                    copy(
+                        editSetDialogState = null,
+                        type = TrainingState.Type.DEFAULT
+                    )
+                }
             }
             is TrainingIntent.OpenEditSetDialog -> modify {
                 copy(

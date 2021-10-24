@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.Flow
 interface ITrainingStorage {
     fun createTraining(trainingTypeId: TrainingTypeId): TrainingId
     fun getTrainingFlow(trainingId: TrainingId): Flow<Training>
-    fun addSet(trainingId: TrainingId, exerciseId: ExerciseId, weight: Int, count: Int)
+    fun addSet(trainingId: TrainingId, exerciseId: ExerciseId, weight: Float, count: Int)
 }

@@ -6,7 +6,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface ITrainingRepository {
     suspend fun createTraining(trainingTypeId: TrainingTypeId): Flow<Training>
-    suspend fun createSet(trainingId: TrainingId, exerciseId: ExerciseId, weight: Int, count: Int)
-    fun updateSet(setId: TrainingSetId, weight: Int, count: Int)
+    suspend fun createSet(
+        trainingId: TrainingId,
+        exerciseId: ExerciseId,
+        weight: Float,
+        count: Int
+    )
+
+    fun updateSet(setId: TrainingSetId, weight: Float, count: Int)
     fun deleteSet(setId: TrainingSetId)
 }

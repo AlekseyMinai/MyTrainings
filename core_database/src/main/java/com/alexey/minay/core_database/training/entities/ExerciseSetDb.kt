@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Sets")
 data class ExerciseSetDb(
-    val weight: Int,
+    val weight: Float,
     val count: Int,
     val exerciseId: Long,
     val trainingId: Long
