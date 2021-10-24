@@ -7,7 +7,7 @@ import java.util.*
 data class Training(
     val id: TrainingId,
     val trainingTypeId: TrainingTypeId,
-    val name: String,
+    val title: String,
     val date: Date,
     val exercises: List<TrainingExercise>
 ) {
@@ -15,7 +15,7 @@ data class Training(
         fun default(trainingTypeId: TrainingTypeId) = Training(
             id = TrainingId(-1),
             trainingTypeId = trainingTypeId,
-            name = "",
+            title = "",
             date = Date(),
             exercises = emptyList()
         )

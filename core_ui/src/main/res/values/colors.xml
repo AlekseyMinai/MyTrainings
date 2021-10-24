@@ -13,4 +13,5 @@
     <color name="CardBackground">#22FFFFFF</color>
     <color name="CardContent">#FFFFFF</color>
     <color name="PageTextColor">#FFFFFF</color>
+    <color name="ToolbarContent">#FFFFFF</color>
 </resources>

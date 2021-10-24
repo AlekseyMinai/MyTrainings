@@ -10,7 +10,7 @@ import java.util.*
 
 fun TrainingWithExercisesAndSets.toDomain() = Training(
     id = TrainingId(training.trainingId),
-    name = trainingType.title,
+    title = trainingType.title,
     date = Date(training.date),
     exercises = exercises.map { it.toDomain(sets) },
     trainingTypeId = TrainingTypeId(trainingType.trainingTypeId)
