@@ -47,6 +47,6 @@ dependencies {
     api "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
 
     //api "com.google.accompanist:accompanist-systemuicontroller:0.20.0"
-    api "com.google.accompanist:accompanist-insets:0.20.0"
+    api "com.google.accompanist:accompanist-insets:0.19.0"
     //api "com.google.accompanist:accompanist-insets-ui:0.20.0"
 }
