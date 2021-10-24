@@ -2,6 +2,7 @@ package com.alesno.mytrainings.navigation
 
 import androidx.annotation.DrawableRes
 import com.alesno.mytrainings.R
+import com.alexey.minay.core_training.TrainingId
 import com.alexey.minay.core_training.TrainingTypeId
 import com.alexey.minay.core_utils.asString
 
@@ -12,12 +13,19 @@ sealed class Destination(
 
     open val route: String get() = routePart + args.asString { "/$it" }
 
-    class Training(trainingTypeId: TrainingTypeId? = null) : Destination(
+    class Training(
+        trainingTypeId: TrainingTypeId? = null,
+        trainingId: TrainingId? = null
+    ) : Destination(
         routePart = "training",
-        args = listOf(trainingTypeId?.value?.toString() ?: "{$KEY_TRAINING_INFO_ID}")
+        args = listOf(
+            trainingTypeId?.value?.toString() ?: "{$KEY_TRAINING_INFO_ID}",
+            trainingId?.value?.toString() ?: "{$KEY_TRAINING_ID}"
+        )
     ) {
         companion object {
             const val KEY_TRAINING_INFO_ID = "training_info_id"
+            const val KEY_TRAINING_ID = "training_id"
         }
     }
 
@@ -30,7 +38,7 @@ sealed class Destination(
         val routePart: String,
         @DrawableRes val iconRes: Int,
         val title: String
-        ) {
+    ) {
         TRAINING_LIST("training list", R.drawable.ic_home, "Тренировки"),
         HISTORY("history", R.drawable.ic_history, "История")
     }

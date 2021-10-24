@@ -9,7 +9,7 @@ class TrainingModule {
 
     @Provides
     fun provideTrainingInitState(dependencies: ITrainingDependencies): TrainingState {
-        return TrainingState.default(dependencies.provideTrainingInfoId())
+        return TrainingState.default(dependencies.provideTrainingInfoId(), dependencies.provideTrainingId())
     }
 
 }

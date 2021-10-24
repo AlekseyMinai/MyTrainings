@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ITrainingRepository {
     suspend fun createTraining(trainingTypeId: TrainingTypeId): Flow<Training>
+    suspend fun getTraining(trainingId: TrainingId): Flow<Training>
     suspend fun createSet(
         trainingId: TrainingId,
         exerciseId: ExerciseId,

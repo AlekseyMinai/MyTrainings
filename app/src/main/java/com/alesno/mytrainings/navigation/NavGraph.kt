@@ -1,6 +1,5 @@
 package com.alesno.mytrainings.navigation
 
-import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -10,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.alesno.mytrainings.di.AppComponent
 import com.alexey.minay.core_database.training.ITrainingHistoryDao
+import com.alexey.minay.core_training.TrainingId
 import com.alexey.minay.core_training.TrainingTypeId
 import com.alexey.minay.feature_training.di.ITrainingDependencies
 import com.alexey.minay.feature_training.di.TrainingComponent
@@ -79,7 +79,11 @@ fun NavGraph(
                 )
                 TrainingHistory(
                     store = store,
-                    startTraining = {}
+                    editTraining = { trainingId ->
+                        val route = Destination.Training(trainingId = trainingId).route
+                        navController.navigate(route)
+
+                    }
                 )
             }
         }
@@ -90,8 +94,15 @@ fun NavGraph(
             val trainingComponent = remember {
                 val trainingInfoId =
                     it.arguments?.getString(Destination.Training.KEY_TRAINING_INFO_ID)
+                val trainingId =
+                    it.arguments?.getString(Destination.Training.KEY_TRAINING_ID)
                 val trainingDependencies = object : ITrainingDependencies {
-                    override fun provideTrainingInfoId() = TrainingTypeId(trainingInfoId!!.toLong())
+                    override fun provideTrainingInfoId() =
+                        trainingInfoId?.toLongOrNull()?.let { TrainingTypeId(it) }
+
+                    override fun provideTrainingId(): TrainingId? =
+                        trainingId?.toLongOrNull()?.let { TrainingId(it) }
+
                     override fun provideTrainingDao() = appComponent.appDatabase.getTrainingDao()
                 }
                 TrainingComponent.initAndGet(trainingDependencies)

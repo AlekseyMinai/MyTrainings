@@ -12,9 +12,12 @@ data class Training(
     val exercises: List<TrainingExercise>
 ) {
     companion object {
-        fun default(trainingTypeId: TrainingTypeId) = Training(
-            id = TrainingId(-1),
-            trainingTypeId = trainingTypeId,
+        fun default(
+            trainingTypeId: TrainingTypeId?,
+            trainingId: TrainingId?
+        ) = Training(
+            id = trainingId ?: TrainingId(-1),
+            trainingTypeId = trainingTypeId ?: TrainingTypeId(-1),
             title = "",
             date = Date(),
             exercises = emptyList()

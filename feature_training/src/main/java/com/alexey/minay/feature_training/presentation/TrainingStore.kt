@@ -2,6 +2,7 @@ package com.alexey.minay.feature_training.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.alexey.minay.core_ui.Store
+import com.alexey.minay.core_utils.TrainingIdUtils
 import com.alexey.minay.core_utils.exhaustive
 import com.alexey.minay.feature_training.domain.ITrainingRepository
 import com.alexey.minay.feature_training.domain.Training
@@ -17,8 +18,10 @@ class TrainingStore @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.createTraining(initialState.training.trainingTypeId)
-                .onEach(::update)
+            when (state.value.training.trainingTypeId.value) {
+                TrainingIdUtils.NO_ID -> repository.getTraining(initialState.training.id)
+                else -> repository.createTraining(initialState.training.trainingTypeId)
+            }.onEach(::update)
                 .launchIn(this)
         }
     }

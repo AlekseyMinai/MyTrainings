@@ -31,7 +31,7 @@ import com.alexey.minay.core_ui.R as RCoreUi
 @Composable
 fun TrainingHistory(
     store: TrainingHistoryStore,
-    startTraining: (trainingId: TrainingId) -> Unit
+    editTraining: (trainingId: TrainingId) -> Unit
 ) {
     val state by store.state.collectAsState()
 
@@ -44,7 +44,7 @@ fun TrainingHistory(
     ) {
         Toolbar2(title = stringResource(RCoreUi.string.training_history))
         TrainingList(state.trainings) {
-            startTraining(it)
+            editTraining(it)
         }
     }
 }
