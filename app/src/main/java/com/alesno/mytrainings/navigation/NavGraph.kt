@@ -1,5 +1,6 @@
 package com.alesno.mytrainings.navigation
 
+import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel

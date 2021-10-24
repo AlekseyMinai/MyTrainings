@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.alexey.minay.core_ui.BackHandler
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.core_ui.theme.Purple200
@@ -43,6 +44,8 @@ fun TrainingScreen(
     onBackPressed: () -> Unit
 ) {
     val state by store.state.collectAsState()
+
+    BackHandler(onBack = onBackPressed)
 
     when (state.type) {
         TrainingState.Type.DEFAULT -> Unit
