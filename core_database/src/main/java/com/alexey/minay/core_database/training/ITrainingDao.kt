@@ -3,6 +3,7 @@ package com.alexey.minay.core_database.training
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.alexey.minay.core_database.training.entities.ExerciseSetDb
 import com.alexey.minay.core_database.training.entities.TrainingDb
 import kotlinx.coroutines.flow.Flow
@@ -17,4 +18,7 @@ interface ITrainingDao {
 
     @Insert
     fun insertSet(setDb: ExerciseSetDb)
+
+    @Update
+    fun updateSet(set: ExerciseSetDb)
 }

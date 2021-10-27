@@ -14,6 +14,13 @@ interface ITrainingRepository {
         count: Int
     )
 
-    fun updateSet(setId: TrainingSetId, weight: Float, count: Int)
+    suspend fun updateSet(
+        trainingId: TrainingId,
+        setId: TrainingSetId,
+        exerciseId: ExerciseId,
+        weight: Float,
+        count: Int
+    )
+
     fun deleteSet(setId: TrainingSetId)
 }

@@ -29,12 +29,22 @@ class TrainingStore @Inject constructor(
     override suspend fun execute(intent: TrainingIntent) {
         when (intent) {
             TrainingIntent.AddSet -> {
-                repository.createSet(
-                    trainingId = state.value.training.id,
-                    exerciseId = state.value.editSetDialogState!!.exerciseId,
-                    weight = state.value.editSetDialogState?.weight?.toFloatOrNull() ?: return,
-                    count = state.value.editSetDialogState?.count?.toIntOrNull() ?: return
-                )
+                if (state.value.editSetDialogState?.isEditing == false) {
+                    repository.createSet(
+                        trainingId = state.value.training.id,
+                        exerciseId = state.value.editSetDialogState!!.exerciseId,
+                        weight = state.value.editSetDialogState?.weight?.toFloatOrNull() ?: return,
+                        count = state.value.editSetDialogState?.count?.toIntOrNull() ?: return
+                    )
+                } else {
+                    repository.updateSet(
+                        setId = state.value.editSetDialogState?.setId ?: return,
+                        weight = state.value.editSetDialogState?.weight?.toFloatOrNull() ?: return,
+                        count = state.value.editSetDialogState?.count?.toIntOrNull() ?: return,
+                        exerciseId = state.value.editSetDialogState?.exerciseId ?: return,
+                        trainingId = state.value.training.id
+                    )
+                }
                 modify { copy(type = TrainingState.Type.DEFAULT) }
             }
             TrainingIntent.CancelAddingSet -> {
@@ -45,14 +55,15 @@ class TrainingStore @Inject constructor(
                     )
                 }
             }
-            is TrainingIntent.OpenEditSetDialog -> modify {
+            is TrainingIntent.CreateSet -> modify {
                 copy(
                     type = TrainingState.Type.EDIT_SET,
                     editSetDialogState = EditSetDialogState(
                         exerciseId = intent.exerciseId,
                         weight = null,
                         count = null,
-                        isEditing = false
+                        isEditing = false,
+                        setId = null
                     )
                 )
             }
@@ -67,6 +78,18 @@ class TrainingStore @Inject constructor(
                 copy(
                     editSetDialogState = editSetDialogState?.copy(
                         weight = intent.weight
+                    )
+                )
+            }
+            is TrainingIntent.EditSet -> modify {
+                copy(
+                    type = TrainingState.Type.EDIT_SET,
+                    editSetDialogState = EditSetDialogState(
+                        exerciseId = intent.exerciseId,
+                        weight = intent.trainingSet.weight.toString(),
+                        count = intent.trainingSet.count.toString(),
+                        isEditing = true,
+                        setId = intent.trainingSet.id
                     )
                 )
             }

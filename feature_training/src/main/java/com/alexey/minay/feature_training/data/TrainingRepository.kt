@@ -37,8 +37,22 @@ class TrainingRepository @Inject constructor(
         }
     }
 
-    override fun updateSet(setId: TrainingSetId, weight: Float, count: Int) {
-        TODO("Not yet implemented")
+    override suspend fun updateSet(
+        trainingId: TrainingId,
+        setId: TrainingSetId,
+        exerciseId: ExerciseId,
+        weight: Float,
+        count: Int
+    ) {
+        withContext(Dispatchers.IO) {
+            trainingStorage.updateSet(
+                trainingId = trainingId,
+                setId = setId,
+                exerciseId = exerciseId,
+                weight = weight,
+                count = count
+            )
+        }
     }
 
     override fun deleteSet(setId: TrainingSetId) {

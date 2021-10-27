@@ -2,8 +2,12 @@ package com.alexey.minay.feature_training.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -57,16 +61,22 @@ fun TrainingScreen(
             onDismiss = { store.accept(TrainingIntent.CancelAddingSet) }
         )
     }
-    Training(state, onBackPressed = onBackPressed) {
-        store.accept(TrainingIntent.OpenEditSetDialog(it))
-    }
+    Training(
+        state = state,
+        onBackPressed = onBackPressed,
+        onNewSetClicked = { store.accept(TrainingIntent.CreateSet(it)) },
+        onClickSet = { set, exerciseId ->
+            store.accept(TrainingIntent.EditSet(set, exerciseId))
+        }
+    )
 }
 
 @Composable
 fun Training(
     state: TrainingState,
     onBackPressed: () -> Unit,
-    onNewSetClicked: (ExerciseId) -> Unit
+    onNewSetClicked: (ExerciseId) -> Unit,
+    onClickSet: (TrainingSet, ExerciseId) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -80,7 +90,8 @@ fun Training(
             exercises = state.training.exercises,
             onNewSetClicked = onNewSetClicked,
             lazyListState = lazyListState,
-            firstItemHeight = firstItemHeight
+            firstItemHeight = firstItemHeight,
+            onClickSet = onClickSet
         )
         Toolbar(
             title = state.training.title,
@@ -98,7 +109,8 @@ private fun TrainingExercises(
     exercises: List<TrainingExercise>,
     onNewSetClicked: (ExerciseId) -> Unit,
     lazyListState: LazyListState,
-    firstItemHeight: Dp
+    firstItemHeight: Dp,
+    onClickSet: (TrainingSet, ExerciseId) -> Unit
 ) {
     val firstItemHeightPx =
         with(LocalDensity.current) { firstItemHeight.roundToPx().toFloat() }
@@ -136,13 +148,21 @@ private fun TrainingExercises(
             }
         }
         items(exercises.size) { index ->
-            TrainingExercise(exercise = exercises[index], onNewSetClicked)
+            TrainingExercise(
+                exercise = exercises[index],
+                onNewSetClicked = onNewSetClicked,
+                onClickSet = onClickSet
+            )
         }
     }
 }
 
 @Composable
-private fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (ExerciseId) -> Unit) {
+private fun TrainingExercise(
+    exercise: TrainingExercise,
+    onNewSetClicked: (ExerciseId) -> Unit,
+    onClickSet: (TrainingSet, ExerciseId) -> Unit
+) {
     Text(
         text = exercise.name,
         modifier = Modifier.padding(start = 16.dp, top = 16.dp),
@@ -162,6 +182,7 @@ private fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (Exerc
             val (list, button) = createRefs()
             TrainingSets(
                 trainingSets = exercise.sets,
+                onClickSet = { onClickSet(it, exercise.id) },
                 modifier = Modifier.constrainAs(list) {
                     start.linkTo(parent.start)
                     end.linkTo(button.start, margin = 8.dp)
@@ -196,7 +217,11 @@ private fun TrainingExercise(exercise: TrainingExercise, onNewSetClicked: (Exerc
 }
 
 @Composable
-private fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
+private fun TrainingSets(
+    trainingSets: List<TrainingSet>,
+    modifier: Modifier,
+    onClickSet: (TrainingSet) -> Unit
+) {
     LazyRow(modifier = modifier) {
         item {
             Spacer(modifier = Modifier.width(8.dp))
@@ -234,14 +259,20 @@ private fun TrainingSets(trainingSets: List<TrainingSet>, modifier: Modifier) {
             }
         }
         items(trainingSets.size) { index ->
-            TrainingSet(trainingSets[trainingSets.lastIndex - index])
+            TrainingSet(
+                trainingSet = trainingSets[trainingSets.lastIndex - index],
+                onClickSet = onClickSet
+            )
         }
     }
 }
 
 @Composable
-private fun TrainingSet(trainingSet: TrainingSet) {
-    Column(Modifier.padding(start = 8.dp, end = 16.dp, bottom = 16.dp)) {
+private fun TrainingSet(trainingSet: TrainingSet, onClickSet: (TrainingSet) -> Unit) {
+    Column(
+        Modifier
+            .padding(start = 8.dp, end = 16.dp, bottom = 16.dp)
+            .clickable { onClickSet(trainingSet) }) {
         Text(
             text = when {
                 (trainingSet.weight % 1) == 0f -> trainingSet.weight.toInt().toString()
