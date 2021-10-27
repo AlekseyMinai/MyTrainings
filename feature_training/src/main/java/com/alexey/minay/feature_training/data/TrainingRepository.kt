@@ -55,8 +55,10 @@ class TrainingRepository @Inject constructor(
         }
     }
 
-    override fun deleteSet(setId: TrainingSetId) {
-        TODO("Not yet implemented")
+    override suspend fun deleteSet(setId: TrainingSetId) {
+        withContext(Dispatchers.IO) {
+            trainingStorage.deleteSet(setId)
+        }
     }
 
 }

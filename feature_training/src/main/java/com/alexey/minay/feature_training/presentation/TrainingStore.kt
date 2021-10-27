@@ -45,7 +45,12 @@ class TrainingStore @Inject constructor(
                         trainingId = state.value.training.id
                     )
                 }
-                modify { copy(type = TrainingState.Type.DEFAULT) }
+                modify {
+                    copy(
+                        editSetDialogState = null,
+                        type = TrainingState.Type.DEFAULT
+                    )
+                }
             }
             TrainingIntent.CancelAddingSet -> {
                 modify {
@@ -92,6 +97,15 @@ class TrainingStore @Inject constructor(
                         setId = intent.trainingSet.id
                     )
                 )
+            }
+            TrainingIntent.DeleteSet -> {
+                repository.deleteSet(state.value.editSetDialogState?.setId ?: return)
+                modify {
+                    copy(
+                        editSetDialogState = null,
+                        type = TrainingState.Type.DEFAULT
+                    )
+                }
             }
         }.exhaustive
     }

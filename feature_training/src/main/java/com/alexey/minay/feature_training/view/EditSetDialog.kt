@@ -21,7 +21,8 @@ fun EditSetDialog(
     onWeightChanged: (String?) -> Unit,
     onCountChanged: (String?) -> Unit,
     onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onDelete: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = { onDismiss() },
@@ -55,8 +56,11 @@ fun EditSetDialog(
             }
         },
         dismissButton = {
-            Button(onClick = { onDismiss() }) {
+            Button(onClick = onDismiss) {
                 Text(text = stringResource(R.string.cancel))
+            }
+            Button(onClick = onDelete) {
+                Text(text = stringResource(R.string.delete))
             }
         }
     )

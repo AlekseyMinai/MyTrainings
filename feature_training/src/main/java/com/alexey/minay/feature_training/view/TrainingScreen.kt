@@ -58,7 +58,8 @@ fun TrainingScreen(
             onWeightChanged = { store.accept(TrainingIntent.ChangeWeight(it)) },
             onCountChanged = { store.accept(TrainingIntent.ChangeCount(it)) },
             onConfirm = { store.accept(TrainingIntent.AddSet) },
-            onDismiss = { store.accept(TrainingIntent.CancelAddingSet) }
+            onDismiss = { store.accept(TrainingIntent.CancelAddingSet) },
+            onDelete = { store.accept(TrainingIntent.DeleteSet) }
         )
     }
     Training(
@@ -271,8 +272,9 @@ private fun TrainingSets(
 private fun TrainingSet(trainingSet: TrainingSet, onClickSet: (TrainingSet) -> Unit) {
     Column(
         Modifier
+            .clickable { onClickSet(trainingSet) }
             .padding(start = 8.dp, end = 16.dp, bottom = 16.dp)
-            .clickable { onClickSet(trainingSet) }) {
+    ) {
         Text(
             text = when {
                 (trainingSet.weight % 1) == 0f -> trainingSet.weight.toInt().toString()

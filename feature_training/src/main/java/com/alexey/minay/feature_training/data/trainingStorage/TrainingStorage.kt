@@ -57,4 +57,8 @@ class TrainingStorage @Inject constructor(
         trainingDao.updateSet(set)
     }
 
+    override fun deleteSet(setId: TrainingSetId) {
+        trainingDao.deleteSet(setId.value)
+    }
+
 }

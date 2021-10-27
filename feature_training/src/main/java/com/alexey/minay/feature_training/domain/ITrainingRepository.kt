@@ -22,5 +22,5 @@ interface ITrainingRepository {
         count: Int
     )
 
-    fun deleteSet(setId: TrainingSetId)
+    suspend fun deleteSet(setId: TrainingSetId)
 }

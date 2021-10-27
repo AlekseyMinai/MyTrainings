@@ -6,6 +6,8 @@ import com.alexey.minay.feature_training.domain.TrainingSet
 sealed interface TrainingIntent {
     object AddSet : TrainingIntent
     object CancelAddingSet : TrainingIntent
+    object DeleteSet : TrainingIntent
+
     class CreateSet(val exerciseId: ExerciseId) : TrainingIntent
     class ChangeWeight(val weight: String?) : TrainingIntent
     class ChangeCount(val count: String?) : TrainingIntent

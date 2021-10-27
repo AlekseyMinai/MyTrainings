@@ -21,4 +21,7 @@ interface ITrainingDao {
 
     @Update
     fun updateSet(set: ExerciseSetDb)
+
+    @Query("DELETE FROM Sets WHERE setId = :setId")
+    fun deleteSet(setId: Long)
 }

@@ -18,4 +18,6 @@ interface ITrainingStorage {
         weight: Float,
         count: Int
     )
+
+    fun deleteSet(setId: TrainingSetId)
 }
