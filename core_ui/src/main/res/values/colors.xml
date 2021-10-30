@@ -14,4 +14,8 @@
     <color name="CardContent">#FFFFFF</color>
     <color name="PageTextColor">#FFFFFF</color>
     <color name="ToolbarContent">#FFFFFF</color>
+    <color name="CalendarPositive">#36B0BB</color>
+    <color name="CalendarNeutral">#9D97CB</color>
+    <color name="CalendarDate">#6C9BD3</color>
+    <color name="CalendarDatePointer">#4C8CDA</color>
 </resources>

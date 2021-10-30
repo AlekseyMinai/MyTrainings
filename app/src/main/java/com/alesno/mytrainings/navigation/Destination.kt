@@ -40,7 +40,8 @@ sealed class Destination(
         val title: String
     ) {
         TRAINING_LIST("training list", R.drawable.ic_home, "Тренировки"),
-        HISTORY("history", R.drawable.ic_history, "История")
+        HISTORY("history", R.drawable.ic_history, "История"),
+        PROGRAM("program", R.drawable.ic_history, "Программы")
     }
 
 }

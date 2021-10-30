@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.alesno.mytrainings.TrainingGroupScreen
 import com.alesno.mytrainings.di.AppComponent
 import com.alesno.mytrainings.navigation.factories.TrainingHistoryStoreFactories
 import com.alesno.mytrainings.navigation.factories.TrainingListStoreFactory
@@ -18,7 +19,7 @@ import com.alexey.minay.feature_training_list.view.TrainingListScreen
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: Destination = Destination.Home(Destination.HomeItem.TRAINING_LIST),
+    startDestination: Destination = Destination.Home(Destination.HomeItem.PROGRAM),
     appComponent: AppComponent
 ) {
     NavHost(
@@ -31,6 +32,11 @@ fun NavGraph(
         ) {
             trainingListScreen(appComponent, navController)
             trainingHomeScreen(appComponent, navController)
+            composable(
+                route = Destination.Home(Destination.HomeItem.PROGRAM).route
+            ){
+                TrainingGroupScreen()
+            }
         }
         trainingScreen(appComponent, navController)
     }
