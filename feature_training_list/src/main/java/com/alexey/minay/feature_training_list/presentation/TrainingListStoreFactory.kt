@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.alexey.minay.feature_training_list.domain.ITrainingListRepository
 import javax.inject.Inject
 
-class TrainingListStoreProvider @Inject constructor(
+class TrainingListStoreFactory @Inject constructor(
     private val trainingListRepository: ITrainingListRepository,
     private val initialState: TrainingListState
 ) : ViewModelProvider.Factory {

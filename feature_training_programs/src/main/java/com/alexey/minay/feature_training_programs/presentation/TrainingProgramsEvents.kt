@@ -1,0 +1,5 @@
+package com.alexey.minay.feature_training_programs.presentation
+
+sealed class ITrainingProgramsIntent
+
+sealed class ITrainingProgramsEvent

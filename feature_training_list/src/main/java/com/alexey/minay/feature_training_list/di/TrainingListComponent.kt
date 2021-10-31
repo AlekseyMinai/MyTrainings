@@ -1,6 +1,6 @@
 package com.alexey.minay.feature_training_list.di
 
-import com.alexey.minay.feature_training_list.presentation.TrainingListStoreProvider
+import com.alexey.minay.feature_training_list.presentation.TrainingListStoreFactory
 import dagger.Component
 
 @Component(
@@ -9,7 +9,7 @@ import dagger.Component
 )
 interface TrainingListComponent {
 
-    val trainingListStoreProvider: TrainingListStoreProvider
+    val trainingListStoreFactory: TrainingListStoreFactory
 
     companion object {
 

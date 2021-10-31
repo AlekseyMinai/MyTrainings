@@ -18,7 +18,7 @@ object TrainingListStoreFactory {
         }
 
         return viewModel(
-            factory = trainingListComponent.trainingListStoreProvider
+            factory = trainingListComponent.trainingListStoreFactory
         )
     }
 
