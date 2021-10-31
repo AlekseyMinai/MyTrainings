@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.alexey.minay.core_ui.Toolbar2
 import com.alexey.minay.core_ui.gradientColor
 import java.text.SimpleDateFormat
@@ -138,12 +140,15 @@ fun TrainingGroupScreen() {
 
         Box(
             modifier = Modifier
-                .fillMaxHeight()
+                .padding(top = 32.dp)
         ) {
-            val list = listOf(1, 2, 3)
+            val list = listOf(1, 2)
             LazyRow {
-                items(list.size) { index ->
-                    GroupItem(index == list.lastIndex)
+                items(list.size) {
+                    GroupItem()
+                }
+                item {
+                    AddGroupItem()
                 }
             }
         }
@@ -151,39 +156,61 @@ fun TrainingGroupScreen() {
 }
 
 @Composable
-fun GroupItem(isLast: Boolean) {
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val paddingEnd = when {
-        isLast -> 16.dp
-        else -> 0.dp
-    }
+fun GroupItem() {
     Box(
         modifier = Modifier
             .padding(vertical = 4.dp)
-            .padding(start = 16.dp, end = paddingEnd)
-            .width(screenWidth - 48.dp)
+            .padding(start = 16.dp, end = 0.dp)
             .clip(RoundedCornerShape(4.dp))
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .clickable { }
                 .background(colorResource(id = RCoreUi.color.CardBackground))
-                .fillMaxSize()
+                .height(212.dp)
+                .width(132.dp)
         ) {
             Image(
                 painter = painterResource(id = RCoreUi.drawable.ic_thumbnail),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp)
+                    .fillMaxSize()
             )
             Text(
                 text = "Трехдневный сплит на силу",
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
-                    .padding(top = 16.dp, bottom = 40.dp),
-                color = colorResource(id = RCoreUi.color.CardContent)
+                    .padding(bottom = 8.dp)
+                    .align(Alignment.BottomStart),
+                color = colorResource(id = RCoreUi.color.CardContent),
+                fontSize = 14.sp
+            )
+        }
+    }
+}
+
+@Composable
+fun AddGroupItem() {
+    Box(
+        modifier = Modifier
+            .padding(vertical = 4.dp)
+            .padding(start = 16.dp, end = 16.dp)
+            .clip(RoundedCornerShape(4.dp))
+    ) {
+        Box(
+            modifier = Modifier
+                .clickable { }
+                .background(colorResource(id = RCoreUi.color.CardBackground))
+                .height(212.dp)
+                .width(132.dp)
+        ) {
+            Image(
+                painter = painterResource(id = RCoreUi.drawable.ic_thumbnail),
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
             )
         }
     }
