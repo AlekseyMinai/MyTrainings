@@ -18,6 +18,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.alexey.minay.core_training.TrainingTypeId
+import com.alexey.minay.core_ui.BackHandler
 import com.alexey.minay.core_ui.Toolbar2
 import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.feature_training_list.domain.TrainingType
@@ -27,9 +29,12 @@ import com.alexey.minay.core_ui.R as RCoreUi
 @Composable
 fun TrainingListScreen(
     store: TrainingListStore,
-    startTraining: (trainingId: com.alexey.minay.core_training.TrainingTypeId) -> Unit
+    startTraining: (trainingId: TrainingTypeId) -> Unit,
+    onBackPressed: () -> Unit
 ) {
     val state by store.state.collectAsState()
+
+    BackHandler(onBack = onBackPressed)
 
     Column(
         modifier = Modifier

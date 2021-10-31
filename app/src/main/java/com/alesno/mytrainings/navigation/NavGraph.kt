@@ -14,6 +14,7 @@ import com.alesno.mytrainings.navigation.factories.TrainingStoreFactory
 import com.alexey.minay.feature_training.di.TrainingComponent
 import com.alexey.minay.feature_training.view.TrainingScreen
 import com.alexey.minay.feature_training_history.ui.TrainingHistory
+import com.alexey.minay.feature_training_list.di.TrainingListComponent
 import com.alexey.minay.feature_training_list.view.TrainingListScreen
 import com.alexey.minay.feature_training_programs.view.TrainingProgramScreen
 
@@ -53,6 +54,10 @@ fun NavGraphBuilder.trainingListScreen(
             startTraining = { trainingInfoId ->
                 val route = Destination.Training(trainingTypeId = trainingInfoId).route
                 navController.navigate(route)
+            },
+            onBackPressed = {
+                navController.popBackStack()
+                TrainingListComponent.release()
             }
         )
     }

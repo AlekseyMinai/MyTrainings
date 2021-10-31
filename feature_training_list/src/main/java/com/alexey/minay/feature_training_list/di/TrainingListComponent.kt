@@ -23,6 +23,10 @@ interface TrainingListComponent {
                     mTrainingListComponent = this
                 }
 
+        fun release() {
+            mTrainingListComponent = null
+        }
+
     }
 
 }
