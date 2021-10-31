@@ -31,25 +31,11 @@ fun NavGraph(
             route = startDestination.routePart,
             startDestination = startDestination.route
         ) {
-            trainingListScreen(appComponent, navController)
             trainingHomeScreen(appComponent, navController)
-            trainingProgramsScreen(appComponent)
+            trainingProgramsScreen(appComponent, navController)
         }
+        trainingListScreen(appComponent, navController)
         trainingScreen(appComponent, navController)
-    }
-}
-
-fun NavGraphBuilder.trainingProgramsScreen(
-    appComponent: AppComponent
-) {
-    composable(
-        route = Destination.Home(Destination.HomeItem.PROGRAM).route
-    ) {
-        val store = TrainingProgramsStoreFactory.create(appComponent)
-
-        TrainingProgramScreen(
-            store = store
-        )
     }
 }
 
@@ -58,14 +44,33 @@ fun NavGraphBuilder.trainingListScreen(
     navController: NavHostController
 ) {
     composable(
-        route = Destination.Home(Destination.HomeItem.TRAINING_LIST).route,
-    ) {
-        val store = TrainingListStoreFactory.create(appComponent)
+        route = Destination.TrainingList().route,
+    ) { backStackEntry ->
+        val store = TrainingListStoreFactory.create(appComponent, backStackEntry.arguments)
 
         TrainingListScreen(
             store = store,
             startTraining = { trainingInfoId ->
                 val route = Destination.Training(trainingTypeId = trainingInfoId).route
+                navController.navigate(route)
+            }
+        )
+    }
+}
+
+fun NavGraphBuilder.trainingProgramsScreen(
+    appComponent: AppComponent,
+    navController: NavHostController
+) {
+    composable(
+        route = Destination.Home(Destination.HomeItem.PROGRAM).route
+    ) {
+        val store = TrainingProgramsStoreFactory.create(appComponent)
+
+        TrainingProgramScreen(
+            store = store,
+            openProgram = { trainingProgramId ->
+                val route = Destination.TrainingList(trainingProgramId).route
                 navController.navigate(route)
             }
         )
@@ -86,7 +91,6 @@ fun NavGraphBuilder.trainingHomeScreen(
             editTraining = { trainingId ->
                 val route = Destination.Training(trainingId = trainingId).route
                 navController.navigate(route)
-
             }
         )
     }

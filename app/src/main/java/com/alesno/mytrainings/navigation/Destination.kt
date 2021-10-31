@@ -5,6 +5,7 @@ import com.alesno.mytrainings.R
 import com.alexey.minay.core_training.TrainingId
 import com.alexey.minay.core_training.TrainingTypeId
 import com.alexey.minay.core_utils.asString
+import com.alexey.minay.core_training.TrainingProgramId
 
 sealed class Destination(
     private var args: List<String> = emptyList(),
@@ -29,6 +30,17 @@ sealed class Destination(
         }
     }
 
+    class TrainingList(
+        programId: TrainingProgramId? = null
+    ) : Destination(
+        routePart = "training_list",
+        args = listOf(programId?.value?.toString() ?: "{$KEY_PROGRAM_ID}")
+    ) {
+        companion object {
+            const val KEY_PROGRAM_ID = "program_id"
+        }
+    }
+
     class Home(val item: HomeItem) : Destination(routePart = "home") {
         override val route: String
             get() = routePart + "/" + item.routePart
@@ -39,9 +51,8 @@ sealed class Destination(
         @DrawableRes val iconRes: Int,
         val title: String
     ) {
-        TRAINING_LIST("training list", R.drawable.ic_home, "Тренировки"),
         HISTORY("history", R.drawable.ic_history, "История"),
-        PROGRAM("program", R.drawable.ic_history, "Программы")
+        PROGRAM("program", R.drawable.ic_home, "Программы")
     }
 
 }

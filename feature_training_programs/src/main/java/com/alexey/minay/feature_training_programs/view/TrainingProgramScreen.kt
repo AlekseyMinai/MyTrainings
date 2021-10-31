@@ -20,14 +20,16 @@ import androidx.compose.ui.unit.sp
 import com.alexey.minay.core_ui.Toolbar2
 import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.feature_training_programs.domain.TrainingProgram
+import com.alexey.minay.core_training.TrainingProgramId
 import com.alexey.minay.feature_training_programs.presentation.TrainingProgramsStore
 import com.alexey.minay.core_ui.R as RCoreUi
 
 @Composable
-fun TrainingProgramScreen(store: TrainingProgramsStore) {
+fun TrainingProgramScreen(
+    store: TrainingProgramsStore,
+    openProgram: (TrainingProgramId) -> Unit
+) {
     val state by store.state.collectAsState()
-
-
     val scrollState = rememberScrollState()
 
     Column(
@@ -39,17 +41,19 @@ fun TrainingProgramScreen(store: TrainingProgramsStore) {
     ) {
         Toolbar2(title = stringResource(RCoreUi.string.training_program))
         Calendar()
-        Programs(state.programs)
-
+        Programs(state.programs, openProgram)
     }
 }
 
 @Composable
-fun Programs(programs: List<TrainingProgram>) {
+fun Programs(
+    programs: List<TrainingProgram>,
+    openProgram: (TrainingProgramId) -> Unit
+) {
     Box {
         LazyRow {
             items(programs.size) { index ->
-                ProgramItem(programs[index])
+                ProgramItem(programs[index], openProgram)
             }
             item {
                 AddGroupItem()
@@ -59,7 +63,10 @@ fun Programs(programs: List<TrainingProgram>) {
 }
 
 @Composable
-fun ProgramItem(program: TrainingProgram) {
+fun ProgramItem(
+    program: TrainingProgram,
+    openProgram: (TrainingProgramId) -> Unit
+) {
     Box(
         modifier = Modifier
             .padding(vertical = 4.dp)
@@ -68,7 +75,7 @@ fun ProgramItem(program: TrainingProgram) {
     ) {
         Box(
             modifier = Modifier
-                .clickable { }
+                .clickable { openProgram(program.programId) }
                 .background(colorResource(id = RCoreUi.color.CardBackground))
                 .height(212.dp)
                 .width(132.dp)

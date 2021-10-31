@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val bottomNavigationItems = mutableListOf(
                 Destination.Home(Destination.HomeItem.PROGRAM),
-                Destination.Home(Destination.HomeItem.TRAINING_LIST),
                 Destination.Home(Destination.HomeItem.HISTORY)
             )
 
