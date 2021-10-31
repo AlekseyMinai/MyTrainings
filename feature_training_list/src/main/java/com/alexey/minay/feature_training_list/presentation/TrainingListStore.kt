@@ -12,7 +12,7 @@ class TrainingListStore(
 
     init {
         viewModelScope.launch {
-            val result = repository.getTrainingList()
+            val result = repository.getTrainingList(state.value.programId)
             modify { copy(trainings = result) }
         }
     }

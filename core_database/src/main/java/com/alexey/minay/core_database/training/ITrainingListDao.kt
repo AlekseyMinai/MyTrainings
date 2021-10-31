@@ -10,6 +10,11 @@ interface ITrainingListDao {
     @Insert
     fun insert(trainingInoList: List<TrainingTypeDb>)
 
-    @Query("SELECT * FROM TrainingTypes")
-    fun getAll(): List<TrainingTypeDb>
+    @Query(
+        """SELECT * FROM TrainingTypes INNER JOIN TrainingProgramTrainingTypeCrossRef ON 
+        TrainingTypes.trainingTypeId = TrainingProgramTrainingTypeCrossRef.trainingTypeId WHERE
+        TrainingProgramTrainingTypeCrossRef.programId = :programId
+        """
+    )
+    fun getAllFor(programId: Long): List<TrainingTypeDb>
 }

@@ -33,9 +33,9 @@ object TrainingListStoreFactory {
             override fun provideCoroutineDispatchersProvider() =
                 appComponent.coroutineDispatchersProvider
 
-            override fun provideTrainingId(): TrainingProgramId? {
+            override fun provideTrainingId(): TrainingProgramId {
                 val programId = arguments?.getString(Destination.TrainingList.KEY_PROGRAM_ID)
-                return programId?.toLongOrNull()?.let { TrainingProgramId(it) }
+                return TrainingProgramId(programId!!.toLong())
             }
 
         }

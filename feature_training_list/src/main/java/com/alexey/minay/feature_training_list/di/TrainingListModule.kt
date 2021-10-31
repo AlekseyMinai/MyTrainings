@@ -8,7 +8,7 @@ import dagger.Provides
 class TrainingListModule {
 
     @Provides
-    fun provideTrainingListInitialState() =
-        TrainingListState.default()
+    fun provideTrainingListInitialState(dependency: TrainingListDependency) =
+        TrainingListState.default(dependency.provideTrainingId())
 
 }

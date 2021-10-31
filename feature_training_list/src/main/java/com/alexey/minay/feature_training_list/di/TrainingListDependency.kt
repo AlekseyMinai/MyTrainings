@@ -7,5 +7,5 @@ import com.alexey.minay.core_utils.CoroutineDispatchersProvider
 interface TrainingListDependency {
     fun provideTrainingListDao(): ITrainingListDao
     fun provideCoroutineDispatchersProvider(): CoroutineDispatchersProvider
-    fun provideTrainingId(): TrainingProgramId?
+    fun provideTrainingId(): TrainingProgramId
 }
