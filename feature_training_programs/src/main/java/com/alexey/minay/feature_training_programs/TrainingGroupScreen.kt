@@ -1,4 +1,4 @@
-package com.alesno.mytrainings
+package com.alexey.minay.feature_training_programs
 
 import android.content.res.Configuration
 import android.graphics.Paint
@@ -205,13 +205,7 @@ fun AddGroupItem() {
                 .height(212.dp)
                 .width(132.dp)
         ) {
-            Image(
-                painter = painterResource(id = RCoreUi.drawable.ic_thumbnail),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxSize()
-            )
+
         }
     }
 }

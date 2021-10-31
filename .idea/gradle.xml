@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/feature_training" />
             <option value="$PROJECT_DIR$/feature_training_history" />
             <option value="$PROJECT_DIR$/feature_training_list" />
+            <option value="$PROJECT_DIR$/feature_training_programs" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

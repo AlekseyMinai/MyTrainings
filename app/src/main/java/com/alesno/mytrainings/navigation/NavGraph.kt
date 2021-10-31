@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.alesno.mytrainings.TrainingGroupScreen
+import com.alexey.minay.feature_training_programs.TrainingGroupScreen
 import com.alesno.mytrainings.di.AppComponent
 import com.alesno.mytrainings.navigation.factories.TrainingHistoryStoreFactories
 import com.alesno.mytrainings.navigation.factories.TrainingListStoreFactory
