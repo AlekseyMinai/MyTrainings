@@ -32,6 +32,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.alexey.minay.core_ui.BackHandler
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.core_ui.gradientColor
+import com.alexey.minay.core_ui.gradientColor2
 import com.alexey.minay.core_ui.theme.Purple200
 import com.alexey.minay.feature_training.R
 import com.alexey.minay.feature_training.domain.ExerciseId
@@ -82,7 +83,7 @@ fun Training(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = gradientColor())
+            .background(brush = gradientColor2())
     ) {
         val lazyListState = rememberLazyListState()
         val firstItemHeight = 200.dp
@@ -97,7 +98,7 @@ fun Training(
         Toolbar(
             title = state.training.title,
             lazyListState = lazyListState,
-            backgroundColor = colorResource(id = RCoreUi.color.PageBackground2),
+            backgroundColor = colorResource(id = RCoreUi.color.PageBackground4),
             firstItemHeight = firstItemHeight,
             onBackPressed = onBackPressed
         )

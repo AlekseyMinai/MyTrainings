@@ -11,3 +11,11 @@ fun gradientColor() = Brush.verticalGradient(
         colorResource(id = R.color.PageBackground2),
     )
 )
+
+@Composable
+fun gradientColor2() = Brush.verticalGradient(
+    colors = listOf(
+        colorResource(id = R.color.PageBackground3),
+        colorResource(id = R.color.PageBackground4),
+    )
+)

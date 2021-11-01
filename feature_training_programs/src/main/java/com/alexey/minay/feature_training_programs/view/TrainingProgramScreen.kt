@@ -50,7 +50,7 @@ fun Programs(
     programs: List<TrainingProgram>,
     openProgram: (TrainingProgramId) -> Unit
 ) {
-    Box {
+    Box(modifier = Modifier.padding(top = 36.dp)) {
         LazyRow {
             items(programs.size) { index ->
                 ProgramItem(programs[index], openProgram)
@@ -77,13 +77,13 @@ fun ProgramItem(
             modifier = Modifier
                 .clickable { openProgram(program.programId) }
                 .background(colorResource(id = RCoreUi.color.CardBackground))
-                .height(212.dp)
-                .width(132.dp)
+                .height(300.dp)
+                .width(164.dp)
         ) {
             Image(
-                painter = painterResource(id = RCoreUi.drawable.ic_thumbnail),
+                painter = painterResource(id = RCoreUi.drawable.ic_core),
                 contentDescription = "",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
             )

@@ -44,12 +44,11 @@ fun Calendar() {
     }
     val screenWidthPx = with(LocalDensity.current) { screenWidth.roundToPx().toFloat() }
 
-    Box(modifier = androidx.compose.ui.Modifier.height(screenWidth - 100.dp)) {
+    Box(modifier = Modifier.height(screenWidth - 100.dp)) {
         Canvas(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
-            val topOffset = 160f
+            val topOffset = 120f
             val offsetY = screenWidthPx / 2 - topOffset
             val horizontalOffset = 120f
             val offsetX = screenWidthPx / 2
@@ -62,8 +61,8 @@ fun Calendar() {
 
             val pointerRadius = 30f
 
-            val dateAngle = calendar.get(java.util.Calendar.DAY_OF_MONTH).toFloat() /
-                    calendar.getActualMaximum(java.util.Calendar.DAY_OF_MONTH) * 360
+            val dateAngle = calendar.get(Calendar.DAY_OF_MONTH).toFloat() /
+                    calendar.getActualMaximum(Calendar.DAY_OF_MONTH) * 360
             val startAngle = 270f
 
             drawCircle(
