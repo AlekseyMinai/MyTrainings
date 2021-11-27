@@ -6,7 +6,7 @@ import com.alexey.minay.feature_training.data.TrainingRepository
 import javax.inject.Inject
 
 
-class TrainingStoreProvider @Inject constructor(
+class TrainingStoreFactory @Inject constructor(
     private val trainingState: TrainingState,
     private val repository: TrainingRepository
 ) : ViewModelProvider.Factory {

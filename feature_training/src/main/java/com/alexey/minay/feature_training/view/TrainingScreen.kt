@@ -32,10 +32,8 @@ import androidx.constraintlayout.compose.Dimension
 import com.alexey.minay.core_ui.BackHandler
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.core_ui.gradientColor
-import com.alexey.minay.core_ui.gradientColor2
 import com.alexey.minay.core_ui.theme.Purple200
-import com.alexey.minay.feature_training.R
-import com.alexey.minay.feature_training.domain.ExerciseId
+import com.alexey.minay.core_training.ExerciseId
 import com.alexey.minay.feature_training.domain.TrainingExercise
 import com.alexey.minay.feature_training.domain.TrainingSet
 import com.alexey.minay.feature_training.presentation.TrainingIntent
@@ -83,7 +81,7 @@ fun Training(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = gradientColor2())
+            .background(brush = gradientColor())
     ) {
         val lazyListState = rememberLazyListState()
         val firstItemHeight = 200.dp
@@ -98,7 +96,7 @@ fun Training(
         Toolbar(
             title = state.training.title,
             lazyListState = lazyListState,
-            backgroundColor = colorResource(id = RCoreUi.color.PageBackground4),
+            backgroundColor = colorResource(id = RCoreUi.color.PageBackground2),
             firstItemHeight = firstItemHeight,
             onBackPressed = onBackPressed
         )
@@ -236,7 +234,7 @@ private fun TrainingSets(
                 backgroundColor = Purple200
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_gym_dumbbell),
+                    painter = painterResource(id = RCoreUi.drawable.ic_gym_dumbbell),
                     contentDescription = "",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier

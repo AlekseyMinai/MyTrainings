@@ -41,6 +41,8 @@ sealed class Destination(
         }
     }
 
+    class TrainingCreator : Destination(routePart = "training_creator")
+
     class Home(val item: HomeItem) : Destination(routePart = "home") {
         override val route: String
             get() = routePart + "/" + item.routePart

@@ -1,6 +1,6 @@
 package com.alexey.minay.feature_training.presentation
 
-import com.alexey.minay.feature_training.domain.ExerciseId
+import com.alexey.minay.core_training.ExerciseId
 import com.alexey.minay.feature_training.domain.TrainingSetId
 
 data class EditSetDialogState(

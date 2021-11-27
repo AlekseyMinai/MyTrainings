@@ -17,17 +17,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alexey.minay.core_training.TrainingProgramId
 import com.alexey.minay.core_ui.Toolbar2
 import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.feature_training_programs.domain.TrainingProgram
-import com.alexey.minay.core_training.TrainingProgramId
 import com.alexey.minay.feature_training_programs.presentation.TrainingProgramsStore
 import com.alexey.minay.core_ui.R as RCoreUi
 
 @Composable
 fun TrainingProgramScreen(
     store: TrainingProgramsStore,
-    openProgram: (TrainingProgramId) -> Unit
+    openProgram: (TrainingProgramId) -> Unit,
+    createTraining: () -> Unit
 ) {
     val state by store.state.collectAsState()
     val scrollState = rememberScrollState()
@@ -41,14 +42,15 @@ fun TrainingProgramScreen(
     ) {
         Toolbar2(title = stringResource(RCoreUi.string.training_program))
         Calendar()
-        Programs(state.programs, openProgram)
+        Programs(state.programs, openProgram, createTraining)
     }
 }
 
 @Composable
 fun Programs(
     programs: List<TrainingProgram>,
-    openProgram: (TrainingProgramId) -> Unit
+    openProgram: (TrainingProgramId) -> Unit,
+    createTraining: () -> Unit
 ) {
     Box(modifier = Modifier.padding(top = 36.dp)) {
         LazyRow {
@@ -56,7 +58,7 @@ fun Programs(
                 ProgramItem(programs[index], openProgram)
             }
             item {
-                AddGroupItem()
+                AddGroupItem(createTraining)
             }
         }
     }
@@ -77,13 +79,13 @@ fun ProgramItem(
             modifier = Modifier
                 .clickable { openProgram(program.programId) }
                 .background(colorResource(id = RCoreUi.color.CardBackground))
-                .height(300.dp)
-                .width(164.dp)
+                .height(212.dp)
+                .width(132.dp)
         ) {
             Image(
-                painter = painterResource(id = RCoreUi.drawable.ic_core),
+                painter = painterResource(id = RCoreUi.drawable.ic_thumbnail),
                 contentDescription = "",
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .fillMaxSize()
             )
@@ -101,7 +103,7 @@ fun ProgramItem(
 }
 
 @Composable
-fun AddGroupItem() {
+fun AddGroupItem(createTraining: () -> Unit) {
     Box(
         modifier = Modifier
             .padding(vertical = 4.dp)
@@ -110,7 +112,7 @@ fun AddGroupItem() {
     ) {
         Box(
             modifier = Modifier
-                .clickable { }
+                .clickable { createTraining() }
                 .background(colorResource(id = RCoreUi.color.CardBackground))
                 .height(212.dp)
                 .width(132.dp)

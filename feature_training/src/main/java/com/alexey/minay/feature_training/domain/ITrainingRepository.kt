@@ -1,5 +1,6 @@
 package com.alexey.minay.feature_training.domain
 
+import com.alexey.minay.core_training.ExerciseId
 import com.alexey.minay.core_training.TrainingId
 import com.alexey.minay.core_training.TrainingTypeId
 import kotlinx.coroutines.flow.Flow

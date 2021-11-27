@@ -1,4 +1,4 @@
-package com.alexey.minay.feature_training.domain
+package com.alexey.minay.core_training
 
 @JvmInline
 value class ExerciseId (val value: Long)

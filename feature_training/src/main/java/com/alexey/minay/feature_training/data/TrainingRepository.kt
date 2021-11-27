@@ -2,7 +2,7 @@ package com.alexey.minay.feature_training.data
 
 import com.alexey.minay.core_training.TrainingId
 import com.alexey.minay.core_training.TrainingTypeId
-import com.alexey.minay.feature_training.domain.ExerciseId
+import com.alexey.minay.core_training.ExerciseId
 import com.alexey.minay.feature_training.domain.ITrainingRepository
 import com.alexey.minay.feature_training.domain.Training
 import com.alexey.minay.feature_training.domain.TrainingSetId

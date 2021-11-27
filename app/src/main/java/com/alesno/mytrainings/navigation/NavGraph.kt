@@ -1,6 +1,8 @@
 package com.alesno.mytrainings.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -13,6 +15,10 @@ import com.alesno.mytrainings.navigation.factories.TrainingProgramsStoreFactory
 import com.alesno.mytrainings.navigation.factories.TrainingStoreFactory
 import com.alexey.minay.feature_training.di.TrainingComponent
 import com.alexey.minay.feature_training.view.TrainingScreen
+import com.alexey.minay.feature_training_creator.di.ITrainingCreatorComponent
+import com.alexey.minay.feature_training_creator.di.ITrainingCreatorDependency
+import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorStore
+import com.alexey.minay.feature_training_creator.ui.TrainingCreator
 import com.alexey.minay.feature_training_history.ui.TrainingHistory
 import com.alexey.minay.feature_training_list.di.TrainingListComponent
 import com.alexey.minay.feature_training_list.view.TrainingListScreen
@@ -37,6 +43,22 @@ fun NavGraph(
         }
         trainingListScreen(appComponent, navController)
         trainingScreen(appComponent, navController)
+        composable(
+            route = Destination.TrainingCreator().route
+        ) {
+            val component = remember {
+                val dependency = object : ITrainingCreatorDependency {}
+                ITrainingCreatorComponent.initAndGet(dependency)
+            }
+
+            val store = viewModel<TrainingCreatorStore>(factory = component.factory)
+            TrainingCreator(
+                store = store,
+                onBackPressed = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
 
@@ -76,6 +98,10 @@ fun NavGraphBuilder.trainingProgramsScreen(
             store = store,
             openProgram = { trainingProgramId ->
                 val route = Destination.TrainingList(trainingProgramId).route
+                navController.navigate(route)
+            },
+            createTraining = {
+                val route = Destination.TrainingCreator().route
                 navController.navigate(route)
             }
         )

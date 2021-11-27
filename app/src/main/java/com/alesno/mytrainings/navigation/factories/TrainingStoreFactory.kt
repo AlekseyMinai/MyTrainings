@@ -22,7 +22,7 @@ object TrainingStoreFactory {
         }
 
         return viewModel(
-            factory = trainingComponent.trainingStoreProvider
+            factory = trainingComponent.trainingStoreFactory
         )
     }
 
