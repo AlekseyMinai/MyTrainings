@@ -1,11 +1,11 @@
 package com.alexey.minay.feature_training_creator.presentation.trainingCreator
 
 import com.alexey.minay.feature_training_creator.domain.Exercise
-import com.alexey.minay.feature_training_creator.domain.MuscleGroup
+import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
 
 data class TrainingCreatorState(
     val title: String,
-    val exercises: List<Item>,
+    val items: List<Item>,
     val type: Type
 ) {
 
@@ -13,14 +13,16 @@ data class TrainingCreatorState(
 
     data class MuscleGroupState(
         val title: String,
-        val isExpanded: Boolean
+        val isExpanded: Boolean,
+        val muscleGroupId: MuscleGroupId
     ) : Item
 
     data class ExerciseState(
         val exercise: Exercise,
         val isInExpandedGroup: Boolean,
         val isSelected: Boolean,
-        val hasDivider: Boolean
+        val hasDivider: Boolean,
+        val muscleGroupId: MuscleGroupId
     ) : Item
 
     enum class Type {
@@ -32,7 +34,7 @@ data class TrainingCreatorState(
 
         fun default() = TrainingCreatorState(
             title = "",
-            exercises = emptyList(),
+            items = emptyList(),
             type = Type.TRAINING_CREATOR
         )
 

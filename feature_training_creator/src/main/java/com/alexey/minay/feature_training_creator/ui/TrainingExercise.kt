@@ -16,9 +16,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.alexey.minay.core_ui.R
 import com.alexey.minay.core_ui.theme.Purple200
+import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorState
 
 @Composable
-fun TrainingExercise() {
+fun TrainingExercise(exerciseState: TrainingCreatorState.ExerciseState) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 4.dp)
@@ -47,7 +48,7 @@ fun TrainingExercise() {
                 )
             }
             Text(
-                text = "Жим штанги лежа",
+                text = exerciseState.exercise.title,
                 color = colorResource(id = R.color.PageTextColor),
                 modifier = Modifier
                     .fillMaxSize()

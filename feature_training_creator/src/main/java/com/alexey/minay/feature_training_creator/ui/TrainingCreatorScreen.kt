@@ -43,23 +43,29 @@ fun TrainingCreatorScreen(
     onBackPressed: () -> Unit
 ) {
     val state by store.state.collectAsState()
-    when (state.type) {
-        TrainingCreatorState.Type.TRAINING_CREATOR -> TrainingCreator(
-            onBackPressed = onBackPressed,
-            openSelectTrainingScreen = {
-                store.accept(TrainingCreatorIntent.OpenExerciseSelectorScreen)
+    val selectedExercises  = state.items.mapNotNull { item ->
+            when(item) {
+                is TrainingCreatorState.MuscleGroupState -> null
+                is TrainingCreatorState.ExerciseState -> when(item.isSelected) {
+                    true -> item
+                    false -> null
+                }
             }
-        )
-        TrainingCreatorState.Type.EXERCISE_SELECTOR ->
-            ExerciseSelectorScreen(store = store)
-    }
-}
+        }
 
+    TrainingCreator(onBackPressed = onBackPressed,
+        openSelectTrainingScreen = {
+            store.accept(TrainingCreatorIntent.OpenExerciseSelectorScreen)
+        },
+        selectedExercises = selectedExercises
+    )
+}
 
 @Composable
 fun TrainingCreator(
     onBackPressed: () -> Unit,
-    openSelectTrainingScreen: () -> Unit
+    openSelectTrainingScreen: () -> Unit,
+    selectedExercises: List<TrainingCreatorState.ExerciseState>
 ) {
     BackHandler(onBack = onBackPressed)
     Box(
@@ -77,7 +83,8 @@ fun TrainingCreator(
         TrainingExercises(
             lazyListState = lazyListState,
             firstItemHeight = firstItemHeight,
-            title = title
+            title = title,
+            selectedExercises = selectedExercises
         )
 
         Toolbar(
@@ -100,7 +107,7 @@ fun TrainingCreator(
         }
 
         Button(
-            onClick = {  },
+            onClick = { },
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
@@ -122,7 +129,8 @@ fun TrainingCreator(
 private fun TrainingExercises(
     title: String,
     lazyListState: LazyListState,
-    firstItemHeight: Dp
+    firstItemHeight: Dp,
+    selectedExercises: List<TrainingCreatorState.ExerciseState>
 ) {
     val firstItemHeightPx =
         with(LocalDensity.current) { firstItemHeight.roundToPx().toFloat() }
@@ -164,12 +172,8 @@ private fun TrainingExercises(
             TrainingName()
         }
 
-        items(4) { index ->
-            TrainingExercise(
-//                exercise = exercises[index],
-//                onNewSetClicked = onNewSetClicked,
-//                onClickSet = onClickSet
-            )
+        items(selectedExercises.size) { index ->
+            TrainingExercise(selectedExercises[index])
         }
     }
 }
@@ -213,6 +217,7 @@ private fun TrainingName() {
 private fun TrainingCreatorScreenPreview() {
     TrainingCreator(
         onBackPressed = { /*TODO*/ },
-        openSelectTrainingScreen = {}
+        openSelectTrainingScreen = {},
+        emptyList()
     )
 }

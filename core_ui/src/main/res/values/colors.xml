@@ -18,5 +18,5 @@
     <color name="CalendarNeutral">#9D97CB</color>
     <color name="CalendarDate">#6C9BD3</color>
     <color name="CalendarDatePointer">#4C8CDA</color>
-    <color name="Separator">#A3A3A3</color>
+    <color name="Separator">#22FFFFFF</color>
 </resources>

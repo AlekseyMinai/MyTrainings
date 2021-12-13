@@ -2,13 +2,11 @@ package com.alexey.minay.feature_training_creator.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,11 +19,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alexey.minay.core_training.ExerciseId
 import com.alexey.minay.core_ui.BackHandler
 import com.alexey.minay.core_ui.R
 import com.alexey.minay.core_ui.Toolbar3
 import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.core_ui.theme.Purple200
+import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
 import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorIntent
 import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorState
 import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorStore
@@ -36,14 +36,18 @@ fun ExerciseSelectorScreen(store: TrainingCreatorStore) {
 
     ExerciseSelector(
         onBackPressed = { store.accept(TrainingCreatorIntent.OpenTrainingCreatorScreen) },
-        items = state.exercises
+        items = state.items,
+        onExerciseSelected = { store.accept(TrainingCreatorIntent.ChangeExerciseSelection(it)) },
+        onChangeExpandState = { store.accept(TrainingCreatorIntent.ChangeExpandState(it)) },
     )
 }
 
 @Composable
 fun ExerciseSelector(
     onBackPressed: () -> Unit,
-    items: List<TrainingCreatorState.Item>
+    items: List<TrainingCreatorState.Item>,
+    onExerciseSelected: (ExerciseId) -> Unit,
+    onChangeExpandState: (MuscleGroupId) -> Unit
 ) {
     BackHandler(onBack = onBackPressed)
     Column(
@@ -52,11 +56,16 @@ fun ExerciseSelector(
             .background(brush = gradientColor())
     ) {
         Toolbar3(title = "Выберите упражнения")
+        Divider(color = colorResource(id = R.color.Separator))
+
         LazyColumn {
             items(items.size) { index ->
                 when (val item = items[index]) {
-                    is TrainingCreatorState.MuscleGroupState -> MuscleGroupItem(item)
-                    is TrainingCreatorState.ExerciseState -> ExerciseItem(item)
+                    is TrainingCreatorState.MuscleGroupState -> MuscleGroupItem(
+                        item,
+                        onChangeExpandState
+                    )
+                    is TrainingCreatorState.ExerciseState -> ExerciseItem(item, onExerciseSelected)
                 }
             }
         }
@@ -64,10 +73,14 @@ fun ExerciseSelector(
 }
 
 @Composable
-fun MuscleGroupItem(state: TrainingCreatorState.MuscleGroupState) {
+fun MuscleGroupItem(
+    state: TrainingCreatorState.MuscleGroupState,
+    onChangeExpandState: (MuscleGroupId) -> Unit
+) {
     Card(
         modifier = Modifier
             .padding(vertical = 4.dp)
+            .clickable { onChangeExpandState(state.muscleGroupId) }
             .fillMaxWidth(),
         backgroundColor = colorResource(id = R.color.CardBackground),
         elevation = 0.dp
@@ -90,13 +103,23 @@ fun MuscleGroupItem(state: TrainingCreatorState.MuscleGroupState) {
 }
 
 @Composable
-fun ExerciseItem(item: TrainingCreatorState.ExerciseState) {
-    Column {
+fun ExerciseItem(
+    item: TrainingCreatorState.ExerciseState,
+    onExerciseSelected: (ExerciseId) -> Unit
+) {
+    if (!item.isInExpandedGroup) {
+        return
+    }
+
+    Column(Modifier.clickable { onExerciseSelected(item.exercise.id) }) {
         Row(Modifier.padding(16.dp)) {
             Checkbox(
-                checked = true,
-                onCheckedChange = {},
-                modifier = Modifier.align(CenterVertically)
+                checked = item.isSelected,
+                onCheckedChange = { onExerciseSelected(item.exercise.id) },
+                modifier = Modifier.align(CenterVertically),
+                colors = CheckboxDefaults.colors(
+                    uncheckedColor = colorResource(id = R.color.CardContent)
+                )
             )
 
             Card(
@@ -138,5 +161,5 @@ fun ExerciseItem(item: TrainingCreatorState.ExerciseState) {
 @Preview
 @Composable
 fun ExerciseSelectorPreview() {
-    ExerciseSelector(onBackPressed = {}, emptyList())
+    ExerciseSelector(onBackPressed = {}, emptyList(), {}, {})
 }

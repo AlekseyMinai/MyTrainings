@@ -10,7 +10,7 @@ import com.alesno.mytrainings.di.AppComponent
 import com.alesno.mytrainings.navigation.factories.*
 import com.alexey.minay.feature_training.di.TrainingComponent
 import com.alexey.minay.feature_training.view.TrainingScreen
-import com.alexey.minay.feature_training_creator.ui.TrainingCreatorScreen
+import com.alexey.minay.feature_training_creator.ui.TrainingCreatorFeature
 import com.alexey.minay.feature_training_history.ui.TrainingHistory
 import com.alexey.minay.feature_training_list.di.TrainingListComponent
 import com.alexey.minay.feature_training_list.view.TrainingListScreen
@@ -135,7 +135,7 @@ fun NavGraphBuilder.trainingCreatorScreen(
     ) {
         val store = TrainingCreatorStoreFactory.create(appComponent)
 
-        TrainingCreatorScreen(
+        TrainingCreatorFeature(
             store = store,
             onBackPressed = {
                 navController.popBackStack()
