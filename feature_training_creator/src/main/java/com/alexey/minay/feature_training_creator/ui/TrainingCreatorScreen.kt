@@ -12,6 +12,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,6 +23,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,13 +32,34 @@ import com.alexey.minay.core_ui.BackHandler
 import com.alexey.minay.core_ui.R
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.core_ui.gradientColor
+import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorIntent
+import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorState
 import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorStore
 import com.google.accompanist.insets.LocalWindowInsets
 
 @Composable
-fun TrainingCreator(
+fun TrainingCreatorScreen(
     store: TrainingCreatorStore,
     onBackPressed: () -> Unit
+) {
+    val state by store.state.collectAsState()
+    when (state.type) {
+        TrainingCreatorState.Type.TRAINING_CREATOR -> TrainingCreator(
+            onBackPressed = onBackPressed,
+            openSelectTrainingScreen = {
+                store.accept(TrainingCreatorIntent.OpenExerciseSelectorScreen)
+            }
+        )
+        TrainingCreatorState.Type.EXERCISE_SELECTOR ->
+            ExerciseSelectorScreen(store = store)
+    }
+}
+
+
+@Composable
+fun TrainingCreator(
+    onBackPressed: () -> Unit,
+    openSelectTrainingScreen: () -> Unit
 ) {
     BackHandler(onBack = onBackPressed)
     Box(
@@ -54,6 +79,7 @@ fun TrainingCreator(
             firstItemHeight = firstItemHeight,
             title = title
         )
+
         Toolbar(
             title = title,
             lazyListState = lazyListState,
@@ -61,15 +87,33 @@ fun TrainingCreator(
             firstItemHeight = firstItemHeight,
             onBackPressed = onBackPressed
         )
+
         FloatingActionButton(
-            onClick = { /*TODO*/ },
+            onClick = { openSelectTrainingScreen() },
             backgroundColor = colorResource(id = R.color.purple_200),
             contentColor = colorResource(R.color.CardContent),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(end = 16.dp, bottom = 16.dp + bottomInset)
+                .padding(end = 16.dp, bottom = 16.dp + bottomInset + 68.dp)
         ) {
             Icon(Icons.Filled.Add, "")
+        }
+
+        Button(
+            onClick = {  },
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 16.dp + bottomInset)
+                .padding(horizontal = 16.dp)
+        ) {
+            Text(
+                text = "Создать",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(36.dp),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
@@ -78,7 +122,7 @@ fun TrainingCreator(
 private fun TrainingExercises(
     title: String,
     lazyListState: LazyListState,
-    firstItemHeight: Dp,
+    firstItemHeight: Dp
 ) {
     val firstItemHeightPx =
         with(LocalDensity.current) { firstItemHeight.roundToPx().toFloat() }
@@ -98,6 +142,7 @@ private fun TrainingExercises(
                         .height(firstItemHeight)
                         .fillMaxSize()
                 )
+
                 Text(
                     text = title,
                     fontSize = 28.sp,
@@ -118,6 +163,7 @@ private fun TrainingExercises(
         item {
             TrainingName()
         }
+
         items(4) { index ->
             TrainingExercise(
 //                exercise = exercises[index],
@@ -160,4 +206,13 @@ private fun TrainingName() {
                 .fillMaxWidth()
         )
     }
+}
+
+@Preview
+@Composable
+private fun TrainingCreatorScreenPreview() {
+    TrainingCreator(
+        onBackPressed = { /*TODO*/ },
+        openSelectTrainingScreen = {}
+    )
 }

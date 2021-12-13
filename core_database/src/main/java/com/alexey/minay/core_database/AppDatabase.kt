@@ -2,10 +2,7 @@ package com.alexey.minay.core_database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.alexey.minay.core_database.training.ITrainingDao
-import com.alexey.minay.core_database.training.ITrainingHistoryDao
-import com.alexey.minay.core_database.training.ITrainingListDao
-import com.alexey.minay.core_database.training.ITrainingProgramsDao
+import com.alexey.minay.core_database.training.*
 import com.alexey.minay.core_database.training.entities.*
 
 @Database(
@@ -27,4 +24,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getTrainingDao(): ITrainingDao
     abstract fun getTrainingHistoryDao(): ITrainingHistoryDao
     abstract fun getTrainingProgramsDao(): ITrainingProgramsDao
+    abstract fun getExerciseGroupDao(): IExerciseGroupDao
 }

@@ -1,4 +1,6 @@
 package com.alexey.minay.feature_training_creator.presentation.trainingCreator
 
-class TrainingCreatorIntent {
+sealed interface TrainingCreatorIntent {
+    object OpenExerciseSelectorScreen : TrainingCreatorIntent
+    object OpenTrainingCreatorScreen : TrainingCreatorIntent
 }

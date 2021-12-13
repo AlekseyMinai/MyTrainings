@@ -119,3 +119,31 @@ fun Toolbar2(
         }
     }
 }
+
+
+@Composable
+fun Toolbar3(
+    title: String,
+    hasNavIcon: Boolean = false,
+    onBackPressed: () -> Unit = {},
+    backgroundColor: Color = Color.Transparent
+) {
+    val insets = LocalWindowInsets.current
+    val topInset = with(LocalDensity.current) { insets.statusBars.top.toDp() }
+
+    Box(
+        modifier = Modifier
+            .height(52.dp + topInset)
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(top = topInset)
+            .background(backgroundColor)
+    ) {
+        Text(
+            text = title,
+            color = colorResource(id = R.color.white),
+            modifier = Modifier.align(Alignment.CenterStart),
+            fontSize = 20.sp
+        )
+    }
+}
