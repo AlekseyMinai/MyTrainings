@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -32,7 +33,8 @@ import com.alexey.minay.core_ui.BackHandler
 import com.alexey.minay.core_ui.R
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.core_ui.gradientColor
-import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorIntent
+import com.alexey.minay.core_ui.theme.Purple200
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorAction
 import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorState
 import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorStore
 import com.google.accompanist.insets.LocalWindowInsets
@@ -43,19 +45,20 @@ fun TrainingCreatorScreen(
     onBackPressed: () -> Unit
 ) {
     val state by store.state.collectAsState()
-    val selectedExercises  = state.items.mapNotNull { item ->
-            when(item) {
-                is TrainingCreatorState.MuscleGroupState -> null
-                is TrainingCreatorState.ExerciseState -> when(item.isSelected) {
-                    true -> item
-                    false -> null
-                }
+    val selectedExercises = state.items.mapNotNull { item ->
+        when (item) {
+            is TrainingCreatorState.MuscleGroupState -> null
+            is TrainingCreatorState.ExerciseState -> when (item.isSelected) {
+                true -> item
+                false -> null
             }
         }
+    }
 
-    TrainingCreator(onBackPressed = onBackPressed,
+    TrainingCreator(
+        onBackPressed = onBackPressed,
         openSelectTrainingScreen = {
-            store.accept(TrainingCreatorIntent.OpenExerciseSelectorScreen)
+            store.accept(TrainingCreatorAction.OpenExerciseSelectorScreen)
         },
         selectedExercises = selectedExercises
     )
@@ -67,18 +70,25 @@ fun TrainingCreator(
     openSelectTrainingScreen: () -> Unit,
     selectedExercises: List<TrainingCreatorState.ExerciseState>
 ) {
+    val insets = LocalWindowInsets.current
+    val bottomInset = with(LocalDensity.current) { insets.navigationBars.bottom.toDp() }
+    val rightInset = with(LocalDensity.current) { insets.navigationBars.right.toDp() }
+    val leftInset = with(LocalDensity.current) { insets.navigationBars.left.toDp() }
+
     BackHandler(onBack = onBackPressed)
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(brush = gradientColor())
+            .padding(
+                bottom = bottomInset,
+                start = rightInset,
+                end = leftInset
+            )
     ) {
         val lazyListState = rememberLazyListState()
         val firstItemHeight = 200.dp
         val title = "Новая тренировка"
-
-        val insets = LocalWindowInsets.current
-        val bottomInset = with(LocalDensity.current) { insets.navigationBars.bottom.toDp() }
 
         TrainingExercises(
             lazyListState = lazyListState,
@@ -101,7 +111,7 @@ fun TrainingCreator(
             contentColor = colorResource(R.color.CardContent),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(end = 16.dp, bottom = 16.dp + bottomInset + 68.dp)
+                .padding(end = 16.dp, bottom = 16.dp + 68.dp)
         ) {
             Icon(Icons.Filled.Add, "")
         }
@@ -111,7 +121,7 @@ fun TrainingCreator(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 16.dp + bottomInset)
+                .padding(bottom = 16.dp)
                 .padding(horizontal = 16.dp)
         ) {
             Text(
@@ -173,7 +183,57 @@ private fun TrainingExercises(
         }
 
         items(selectedExercises.size) { index ->
-            TrainingExercise(selectedExercises[index])
+            TrainingExercise(selectedExercises[index], index == selectedExercises.lastIndex)
+        }
+    }
+}
+
+@Composable
+fun TrainingExercise(
+    exerciseState: TrainingCreatorState.ExerciseState,
+    isLast: Boolean
+) {
+    val bottomPadding = when {
+        isLast -> 68.dp + 16.dp
+        else -> 4.dp
+    }
+
+    Card(
+        modifier = Modifier
+            .padding(horizontal = 8.dp)
+            .padding(top = 4.dp, bottom = bottomPadding)
+            .clip(RoundedCornerShape(4.dp))
+            .fillMaxWidth(),
+        backgroundColor = colorResource(id = R.color.CardBackground),
+        elevation = 0.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 12.dp)
+        ) {
+            Card(
+                modifier = Modifier.size(48.dp),
+                shape = CircleShape,
+                elevation = 2.dp,
+                backgroundColor = Purple200
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_gym_dumbbell),
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(12.dp)
+                )
+            }
+            Text(
+                text = exerciseState.exercise.title,
+                color = colorResource(id = R.color.PageTextColor),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 8.dp)
+                    .align(Alignment.CenterVertically)
+            )
         }
     }
 }

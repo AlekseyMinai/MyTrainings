@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,9 +27,10 @@ import com.alexey.minay.core_ui.Toolbar3
 import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.core_ui.theme.Purple200
 import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
-import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorIntent
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorAction
 import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorState
 import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorStore
+import com.google.accompanist.insets.LocalWindowInsets
 import com.alexey.minay.core_ui.R as CoreUiR
 
 @Composable
@@ -36,10 +38,10 @@ fun ExerciseSelectorScreen(store: TrainingCreatorStore) {
     val state by store.state.collectAsState()
 
     ExerciseSelector(
-        onBackPressed = { store.accept(TrainingCreatorIntent.OpenTrainingCreatorScreen) },
+        onBackPressed = { store.accept(TrainingCreatorAction.OpenTrainingCreatorScreen) },
         items = state.items,
-        onExerciseSelected = { store.accept(TrainingCreatorIntent.ChangeExerciseSelection(it)) },
-        onChangeExpandState = { store.accept(TrainingCreatorIntent.ChangeExpandState(it)) },
+        onExerciseSelected = { store.accept(TrainingCreatorAction.ChangeExerciseSelection(it)) },
+        onChangeExpandState = { store.accept(TrainingCreatorAction.ChangeExpandState(it)) },
     )
 }
 
@@ -51,12 +53,28 @@ fun ExerciseSelector(
     onChangeExpandState: (MuscleGroupId) -> Unit
 ) {
     BackHandler(onBack = onBackPressed)
+
+    val insets = LocalWindowInsets.current
+    val bottomInset = with(LocalDensity.current) { insets.navigationBars.bottom.toDp() }
+    val rightInset = with(LocalDensity.current) { insets.navigationBars.right.toDp() }
+    val leftInset = with(LocalDensity.current) { insets.navigationBars.left.toDp() }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(brush = gradientColor())
+            .padding(
+                bottom = bottomInset,
+                start = rightInset,
+                end = leftInset
+            )
     ) {
-        Toolbar3(title = stringResource(CoreUiR.string.choose_exercise))
+        Toolbar3(
+            title = stringResource(CoreUiR.string.choose_exercise),
+            hasNavIcon = true,
+            onBackPressed = onBackPressed
+        )
+
         Divider(color = colorResource(id = CoreUiR.color.Separator))
 
         LazyColumn {

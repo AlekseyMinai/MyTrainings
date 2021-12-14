@@ -2,6 +2,7 @@ package com.alexey.minay.core_ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -131,7 +132,7 @@ fun Toolbar3(
     val insets = LocalWindowInsets.current
     val topInset = with(LocalDensity.current) { insets.statusBars.top.toDp() }
 
-    Box(
+    Row(
         modifier = Modifier
             .height(52.dp + topInset)
             .fillMaxWidth()
@@ -139,10 +140,22 @@ fun Toolbar3(
             .padding(top = topInset)
             .background(backgroundColor)
     ) {
+        if (hasNavIcon) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_arrow),
+                tint = colorResource(id = R.color.ToolbarContent),
+                contentDescription = "",
+                modifier = Modifier
+                    .clickable { onBackPressed() }
+                    .align(Alignment.CenterVertically)
+            )
+        }
+
         Text(
             text = title,
-            color = colorResource(id = R.color.white),
-            modifier = Modifier.align(Alignment.CenterStart),
+            color = colorResource(id = R.color.ToolbarContent),
+            modifier = Modifier.align(Alignment.CenterVertically)
+                .padding(start = 8.dp),
             fontSize = 20.sp
         )
     }

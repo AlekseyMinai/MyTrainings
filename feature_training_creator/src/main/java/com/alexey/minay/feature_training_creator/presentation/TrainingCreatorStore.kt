@@ -9,22 +9,30 @@ import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
 class TrainingCreatorStore(
     initialState: TrainingCreatorState,
     private val repository: ITrainingCreatorRepository
-) : Store<TrainingCreatorState, TrainingCreatorIntent, Nothing>(initialState) {
+) : Store<TrainingCreatorState, TrainingCreatorAction, Nothing>(initialState) {
 
-    override suspend fun execute(intent: TrainingCreatorIntent) {
+    override suspend fun execute(intent: TrainingCreatorAction) {
         when (intent) {
-            TrainingCreatorIntent.OpenExerciseSelectorScreen -> {
-                modify { copy(type = TrainingCreatorState.Type.EXERCISE_SELECTOR) }
-                val exercises = getExercises()
-                modify { copy(items = exercises) }
-            }
-            TrainingCreatorIntent.OpenTrainingCreatorScreen ->
+            TrainingCreatorAction.OpenExerciseSelectorScreen ->
+                openExerciseSelectorScreen()
+            TrainingCreatorAction.OpenTrainingCreatorScreen ->
                 modify { copy(type = TrainingCreatorState.Type.TRAINING_CREATOR) }
-            is TrainingCreatorIntent.ChangeExerciseSelection ->
+            is TrainingCreatorAction.ChangeExerciseSelection ->
                 changeExerciseSelection(intent.exerciseId)
-            is TrainingCreatorIntent.ChangeExpandState ->
+            is TrainingCreatorAction.ChangeExpandState ->
                 changeExpandState(intent.muscleGroupId)
         }.exhaustive
+    }
+
+    private suspend fun openExerciseSelectorScreen() {
+        modify { copy(type = TrainingCreatorState.Type.EXERCISE_SELECTOR) }
+
+        if (state.value.items.isNotEmpty()) {
+            return
+        }
+
+        val exercises = getExercises()
+        modify { copy(items = exercises) }
     }
 
     private suspend fun getExercises(): List<TrainingCreatorState.Item> {
