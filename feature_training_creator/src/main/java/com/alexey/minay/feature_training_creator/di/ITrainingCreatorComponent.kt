@@ -1,6 +1,6 @@
 package com.alexey.minay.feature_training_creator.di
 
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorStoreFactory
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorStoreFactory
 import dagger.Component
 
 @Component(

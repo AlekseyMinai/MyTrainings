@@ -3,8 +3,8 @@ package com.alexey.minay.feature_training_creator.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorState
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorStore
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorState
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorStore
 
 @Composable
 fun TrainingCreatorFeature(

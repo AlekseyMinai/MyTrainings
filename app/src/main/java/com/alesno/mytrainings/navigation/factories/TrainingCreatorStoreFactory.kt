@@ -6,7 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alesno.mytrainings.di.AppComponent
 import com.alexey.minay.feature_training_creator.di.ITrainingCreatorComponent
 import com.alexey.minay.feature_training_creator.di.ITrainingCreatorDependency
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorStore
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorStore
 
 object TrainingCreatorStoreFactory {
 

@@ -32,9 +32,9 @@ import com.alexey.minay.core_ui.BackHandler
 import com.alexey.minay.core_ui.R
 import com.alexey.minay.core_ui.Toolbar
 import com.alexey.minay.core_ui.gradientColor
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorIntent
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorState
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorStore
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorIntent
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorState
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorStore
 import com.google.accompanist.insets.LocalWindowInsets
 
 @Composable

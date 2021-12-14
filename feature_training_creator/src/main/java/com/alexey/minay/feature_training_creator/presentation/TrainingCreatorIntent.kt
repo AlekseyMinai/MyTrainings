@@ -1,4 +1,4 @@
-package com.alexey.minay.feature_training_creator.presentation.trainingCreator
+package com.alexey.minay.feature_training_creator.presentation
 
 import com.alexey.minay.core_training.ExerciseId
 import com.alexey.minay.feature_training_creator.domain.MuscleGroupId

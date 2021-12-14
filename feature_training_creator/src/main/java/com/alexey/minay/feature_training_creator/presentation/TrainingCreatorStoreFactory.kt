@@ -1,4 +1,4 @@
-package com.alexey.minay.feature_training_creator.presentation.trainingCreator
+package com.alexey.minay.feature_training_creator.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

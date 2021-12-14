@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.alexey.minay.core_ui.R
 import com.alexey.minay.core_ui.theme.Purple200
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorState
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorState
 
 @Composable
 fun TrainingExercise(exerciseState: TrainingCreatorState.ExerciseState) {

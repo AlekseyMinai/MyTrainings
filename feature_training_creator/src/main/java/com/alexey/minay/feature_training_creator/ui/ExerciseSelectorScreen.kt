@@ -16,19 +16,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alexey.minay.core_training.ExerciseId
 import com.alexey.minay.core_ui.BackHandler
-import com.alexey.minay.core_ui.R
 import com.alexey.minay.core_ui.Toolbar3
 import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.core_ui.theme.Purple200
 import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorIntent
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorState
-import com.alexey.minay.feature_training_creator.presentation.trainingCreator.TrainingCreatorStore
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorIntent
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorState
+import com.alexey.minay.feature_training_creator.presentation.TrainingCreatorStore
+import com.alexey.minay.core_ui.R as CoreUiR
 
 @Composable
 fun ExerciseSelectorScreen(store: TrainingCreatorStore) {
@@ -55,15 +56,15 @@ fun ExerciseSelector(
             .fillMaxSize()
             .background(brush = gradientColor())
     ) {
-        Toolbar3(title = "Выберите упражнения")
-        Divider(color = colorResource(id = R.color.Separator))
+        Toolbar3(title = stringResource(CoreUiR.string.choose_exercise))
+        Divider(color = colorResource(id = CoreUiR.color.Separator))
 
         LazyColumn {
             items(items.size) { index ->
                 when (val item = items[index]) {
                     is TrainingCreatorState.MuscleGroupState -> MuscleGroupItem(
-                        item,
-                        onChangeExpandState
+                        onChangeExpandState = onChangeExpandState,
+                        state = item
                     )
                     is TrainingCreatorState.ExerciseState -> ExerciseItem(item, onExerciseSelected)
                 }
@@ -79,22 +80,22 @@ fun MuscleGroupItem(
 ) {
     Card(
         modifier = Modifier
-            .padding(vertical = 4.dp)
+            .padding(bottom = 4.dp)
             .clickable { onChangeExpandState(state.muscleGroupId) }
             .fillMaxWidth(),
-        backgroundColor = colorResource(id = R.color.CardBackground),
+        backgroundColor = colorResource(id = CoreUiR.color.CardBackground),
         elevation = 0.dp
     ) {
         Text(
             text = state.title,
             fontSize = 15.sp,
-            color = colorResource(id = R.color.PageTextColor),
+            color = colorResource(id = CoreUiR.color.PageTextColor),
             modifier = Modifier
                 .padding(vertical = 16.dp)
                 .padding(start = 16.dp, end = 48.dp)
         )
         Image(
-            painter = painterResource(id = R.drawable.ic_arrow_up),
+            painter = painterResource(id = CoreUiR.drawable.ic_arrow_up),
             contentDescription = null,
             alignment = Alignment.CenterEnd,
             modifier = Modifier.padding(16.dp)
@@ -118,7 +119,7 @@ fun ExerciseItem(
                 onCheckedChange = { onExerciseSelected(item.exercise.id) },
                 modifier = Modifier.align(CenterVertically),
                 colors = CheckboxDefaults.colors(
-                    uncheckedColor = colorResource(id = R.color.CardContent)
+                    uncheckedColor = colorResource(id = CoreUiR.color.CardContent)
                 )
             )
 
@@ -131,7 +132,7 @@ fun ExerciseItem(
                 backgroundColor = Purple200
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_gym_dumbbell),
+                    painter = painterResource(id = CoreUiR.drawable.ic_gym_dumbbell),
                     contentDescription = "",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -142,7 +143,7 @@ fun ExerciseItem(
 
             Text(
                 text = item.exercise.title,
-                color = colorResource(id = R.color.PageTextColor),
+                color = colorResource(id = CoreUiR.color.PageTextColor),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 8.dp)
@@ -152,7 +153,7 @@ fun ExerciseItem(
         if (item.hasDivider) {
             Divider(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                color = colorResource(id = R.color.Separator)
+                color = colorResource(id = CoreUiR.color.Separator)
             )
         }
     }
