@@ -6,6 +6,8 @@ import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
 sealed interface TrainingCreatorAction {
     class ChangeExerciseSelection(val exerciseId: ExerciseId) : TrainingCreatorAction
     class ChangeExpandState(val muscleGroupId: MuscleGroupId) : TrainingCreatorAction
+    class UpdateTrainingTitle(val title: String) : TrainingCreatorAction
     object OpenExerciseSelectorScreen : TrainingCreatorAction
     object OpenTrainingCreatorScreen : TrainingCreatorAction
+    object SaveTraining : TrainingCreatorAction
 }

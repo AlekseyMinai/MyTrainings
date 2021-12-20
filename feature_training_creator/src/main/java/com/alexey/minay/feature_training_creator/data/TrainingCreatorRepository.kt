@@ -2,12 +2,10 @@ package com.alexey.minay.feature_training_creator.data
 
 import com.alexey.minay.core_database.training.IExerciseGroupDao
 import com.alexey.minay.core_database.training.MuscleGroupWithExercises
+import com.alexey.minay.core_database.training.entities.TrainingTypeDb
 import com.alexey.minay.core_training.ExerciseId
 import com.alexey.minay.core_utils.CoroutineDispatchersProvider
-import com.alexey.minay.feature_training_creator.domain.Exercise
-import com.alexey.minay.feature_training_creator.domain.ITrainingCreatorRepository
-import com.alexey.minay.feature_training_creator.domain.MuscleGroup
-import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
+import com.alexey.minay.feature_training_creator.domain.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -19,6 +17,16 @@ class TrainingCreatorRepository @Inject constructor(
     override suspend fun getExercises() = withContext(coroutineDispatchersProvider.io) {
         storage.getExerciseGroup().asDomain()
     }
+
+    override suspend fun saveTraining(training: Training) =
+        withContext(coroutineDispatchersProvider.io) {
+            val trainingDb = TrainingTypeDb(
+                title = training.title
+            )
+
+            val exerciseIds = training.exercises.map { it.value }
+            storage.insertTraining(trainingDb, exerciseIds)
+        }
 
     private fun List<MuscleGroupWithExercises>.asDomain() = map {
         MuscleGroup(

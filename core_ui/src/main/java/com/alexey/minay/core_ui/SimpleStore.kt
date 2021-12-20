@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-abstract class Store<State, Intent, Event>(
+abstract class SimpleStore<State, Intent, Event>(
     initState: State
 ) : ViewModel() {
 
@@ -20,6 +20,8 @@ abstract class Store<State, Intent, Event>(
     }
 
     protected abstract suspend fun execute(intent: Intent)
+
+    protected fun getState() = state.value
 
     protected fun modify(modifier: State.() -> State) {
         mState.value = mState.value.modifier()

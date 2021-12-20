@@ -4,4 +4,6 @@
     <string name="training_history">История тренировок</string>
     <string name="training_program">Программы тренировок</string>
     <string name="choose_exercise">Выберите упражнения</string>
+    <string name="new_training">Новая тренировка</string>
+    <string name="input_training_title">Введите название тренировки</string>
 </resources>

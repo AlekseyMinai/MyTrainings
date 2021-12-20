@@ -1,15 +1,16 @@
 package com.alexey.minay.feature_training_creator.presentation
 
 import com.alexey.minay.core_training.ExerciseId
-import com.alexey.minay.core_ui.Store
+import com.alexey.minay.core_ui.SimpleStore
 import com.alexey.minay.core_utils.exhaustive
 import com.alexey.minay.feature_training_creator.domain.ITrainingCreatorRepository
 import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
+import com.alexey.minay.feature_training_creator.domain.Training
 
 class TrainingCreatorStore(
     initialState: TrainingCreatorState,
     private val repository: ITrainingCreatorRepository
-) : Store<TrainingCreatorState, TrainingCreatorAction, Nothing>(initialState) {
+) : SimpleStore<TrainingCreatorState, TrainingCreatorAction, Nothing>(initialState) {
 
     override suspend fun execute(intent: TrainingCreatorAction) {
         when (intent) {
@@ -21,7 +22,31 @@ class TrainingCreatorStore(
                 changeExerciseSelection(intent.exerciseId)
             is TrainingCreatorAction.ChangeExpandState ->
                 changeExpandState(intent.muscleGroupId)
+            is TrainingCreatorAction.UpdateTrainingTitle ->
+                modify { copy(title = intent.title) }
+            TrainingCreatorAction.SaveTraining -> saveTraining()
         }.exhaustive
+    }
+
+    private suspend fun saveTraining() {
+        if (getState().title.isBlank()) {
+            return
+        }
+
+        val training = Training(
+            title = getState().title,
+            exercises = getState().items.mapNotNull {
+                when (it) {
+                    is TrainingCreatorState.MuscleGroupState -> null
+                    is TrainingCreatorState.ExerciseState -> when {
+                        it.isSelected -> it.exercise.id
+                        else -> null
+                    }
+                }
+            }
+        )
+
+        repository.saveTraining(training)
     }
 
     private suspend fun openExerciseSelectorScreen() {

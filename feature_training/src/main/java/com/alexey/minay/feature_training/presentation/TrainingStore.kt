@@ -1,7 +1,7 @@
 package com.alexey.minay.feature_training.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.alexey.minay.core_ui.Store
+import com.alexey.minay.core_ui.SimpleStore
 import com.alexey.minay.core_utils.TrainingIdUtils
 import com.alexey.minay.core_utils.exhaustive
 import com.alexey.minay.feature_training.domain.ITrainingRepository
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class TrainingStore @Inject constructor(
     private val repository: ITrainingRepository,
     initialState: TrainingState
-) : Store<TrainingState, TrainingIntent, TrainingEvent>(initialState) {
+) : SimpleStore<TrainingState, TrainingIntent, TrainingEvent>(initialState) {
 
     init {
         viewModelScope.launch {

@@ -22,7 +22,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,10 +59,17 @@ fun TrainingCreatorScreen(
 
     TrainingCreator(
         onBackPressed = onBackPressed,
+        selectedExercises = selectedExercises,
+        trainingTitle = state.title,
+        onTrainingTitleChanged = {
+            store.accept(TrainingCreatorAction.UpdateTrainingTitle(it))
+        },
         openSelectTrainingScreen = {
             store.accept(TrainingCreatorAction.OpenExerciseSelectorScreen)
         },
-        selectedExercises = selectedExercises
+        onSaveTraining = {
+            store.accept(TrainingCreatorAction.SaveTraining)
+        }
     )
 }
 
@@ -68,7 +77,10 @@ fun TrainingCreatorScreen(
 fun TrainingCreator(
     onBackPressed: () -> Unit,
     openSelectTrainingScreen: () -> Unit,
-    selectedExercises: List<TrainingCreatorState.ExerciseState>
+    selectedExercises: List<TrainingCreatorState.ExerciseState>,
+    trainingTitle: String,
+    onTrainingTitleChanged: (String) -> Unit,
+    onSaveTraining: () -> Unit
 ) {
     val insets = LocalWindowInsets.current
     val bottomInset = with(LocalDensity.current) { insets.navigationBars.bottom.toDp() }
@@ -87,14 +99,16 @@ fun TrainingCreator(
             )
     ) {
         val lazyListState = rememberLazyListState()
-        val firstItemHeight = 200.dp
-        val title = "Новая тренировка"
+        val firstItemHeight = 220.dp
+        val title = stringResource(R.string.new_training)
 
         TrainingExercises(
+            title = title,
             lazyListState = lazyListState,
             firstItemHeight = firstItemHeight,
-            title = title,
-            selectedExercises = selectedExercises
+            selectedExercises = selectedExercises,
+            onTrainingTitleChanged = onTrainingTitleChanged,
+            trainingTitle = trainingTitle
         )
 
         Toolbar(
@@ -111,18 +125,21 @@ fun TrainingCreator(
             contentColor = colorResource(R.color.CardContent),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(end = 16.dp, bottom = 16.dp + 68.dp)
+                .padding(
+                    end = dimensionResource(R.dimen.page_horizontal_padding),
+                    bottom = 74.dp
+                )
         ) {
             Icon(Icons.Filled.Add, "")
         }
 
         Button(
-            onClick = { },
+            onClick = onSaveTraining,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = dimensionResource(R.dimen.page_horizontal_padding))
         ) {
             Text(
                 text = "Создать",
@@ -140,46 +157,24 @@ private fun TrainingExercises(
     title: String,
     lazyListState: LazyListState,
     firstItemHeight: Dp,
-    selectedExercises: List<TrainingCreatorState.ExerciseState>
+    selectedExercises: List<TrainingCreatorState.ExerciseState>,
+    trainingTitle: String,
+    onTrainingTitleChanged: (String) -> Unit
 ) {
-    val firstItemHeightPx =
-        with(LocalDensity.current) { firstItemHeight.roundToPx().toFloat() }
-
     LazyColumn(
         state = lazyListState,
         modifier = Modifier
             .fillMaxSize()
     ) {
         item {
-            Box {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_thumbnail),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .height(firstItemHeight)
-                        .fillMaxSize()
-                )
-
-                Text(
-                    text = title,
-                    fontSize = 28.sp,
-                    modifier = Modifier
-                        .padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
-                        .graphicsLayer {
-                            alpha = when (lazyListState.firstVisibleItemIndex) {
-                                0 -> 1 - ((lazyListState.firstVisibleItemScrollOffset) / (firstItemHeightPx))
-                                    .coerceIn(0f, 1f)
-                                else -> 0f
-                            }
-                        }
-                        .align(Alignment.BottomStart),
-                    color = colorResource(id = R.color.PageTextColor)
-                )
-            }
+            ToolbarItem(firstItemHeight, title, lazyListState)
         }
+
         item {
-            TrainingName()
+            TrainingName(
+                title = trainingTitle,
+                onTrainingTitleChanged
+            )
         }
 
         items(selectedExercises.size) { index ->
@@ -189,12 +184,53 @@ private fun TrainingExercises(
 }
 
 @Composable
+fun ToolbarItem(
+    firstItemHeight: Dp,
+    title: String,
+    lazyListState: LazyListState
+) {
+    val firstItemHeightPx =
+        with(LocalDensity.current) { firstItemHeight.roundToPx().toFloat() }
+
+    Box {
+        Image(
+            painter = painterResource(id = R.drawable.ic_thumbnail),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
+                .height(firstItemHeight)
+                .fillMaxSize()
+        )
+
+        Text(
+            text = title,
+            fontSize = 28.sp,
+            modifier = Modifier
+                .padding(
+                    start = dimensionResource(R.dimen.page_horizontal_padding),
+                    top = 16.dp,
+                    bottom = 16.dp
+                )
+                .graphicsLayer {
+                    alpha = when (lazyListState.firstVisibleItemIndex) {
+                        0 -> 1 - ((lazyListState.firstVisibleItemScrollOffset) / (firstItemHeightPx))
+                            .coerceIn(0f, 1f)
+                        else -> 0f
+                    }
+                }
+                .align(Alignment.BottomStart),
+            color = colorResource(id = R.color.PageTextColor)
+        )
+    }
+}
+
+@Composable
 fun TrainingExercise(
     exerciseState: TrainingCreatorState.ExerciseState,
     isLast: Boolean
 ) {
     val bottomPadding = when {
-        isLast -> 68.dp + 16.dp
+        isLast -> 74.dp
         else -> 4.dp
     }
 
@@ -239,7 +275,10 @@ fun TrainingExercise(
 }
 
 @Composable
-private fun TrainingName() {
+private fun TrainingName(
+    title: String,
+    onTitleChange: (String) -> Unit
+) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp)
@@ -250,9 +289,9 @@ private fun TrainingName() {
         elevation = 0.dp
     ) {
         OutlinedTextField(
-            value = ("").toString(),
-            onValueChange = { },
-            label = { Text("Введите название тренировки") },
+            value = title,
+            onValueChange = { onTitleChange(it) },
+            label = { Text(stringResource(id = R.string.input_training_title)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = colorResource(id = R.color.CardContent),
@@ -275,9 +314,9 @@ private fun TrainingName() {
 @Preview
 @Composable
 private fun TrainingCreatorScreenPreview() {
-    TrainingCreator(
-        onBackPressed = { /*TODO*/ },
-        openSelectTrainingScreen = {},
-        emptyList()
-    )
+//    TrainingCreator(
+//        onBackPressed = { /*TODO*/ },
+//        openSelectTrainingScreen = {},
+//        emptyList()
+//    )
 }
