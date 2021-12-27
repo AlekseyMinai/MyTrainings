@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.alexey.minay.core_database.training.entities.TrainingTypeDb
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ITrainingListDao {
@@ -16,5 +17,5 @@ interface ITrainingListDao {
         TrainingProgramTrainingTypeCrossRef.programId = :programId
         """
     )
-    fun getAllFor(programId: Long): List<TrainingTypeDb>
+    fun getAllFor(programId: Long): Flow<List<TrainingTypeDb>>
 }
