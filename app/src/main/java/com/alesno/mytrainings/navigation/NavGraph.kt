@@ -57,6 +57,10 @@ fun NavGraphBuilder.trainingListScreen(
             onBackPressed = {
                 navController.popBackStack()
                 TrainingListComponent.release()
+            },
+            createTraining = {
+                val route = Destination.TrainingCreator(it).route
+                navController.navigate(route)
             }
         )
     }
@@ -78,8 +82,7 @@ fun NavGraphBuilder.trainingProgramsScreen(
                 navController.navigate(route)
             },
             createTraining = {
-                val route = Destination.TrainingCreator().route
-                navController.navigate(route)
+
             }
         )
     }
@@ -132,8 +135,8 @@ fun NavGraphBuilder.trainingCreatorScreen(
 ) {
     composable(
         route = Destination.TrainingCreator().route
-    ) {
-        val store = TrainingCreatorStoreFactory.create(appComponent)
+    ) { backStackEntry ->
+        val store = TrainingCreatorStoreFactory.create(appComponent, backStackEntry.arguments)
 
         TrainingCreatorFeature(
             store = store,

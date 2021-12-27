@@ -19,4 +19,5 @@
     <color name="CalendarDate">#6C9BD3</color>
     <color name="CalendarDatePointer">#4C8CDA</color>
     <color name="Separator">#22FFFFFF</color>
+    <color name="Button">#FFBB86FC</color>
 </resources>

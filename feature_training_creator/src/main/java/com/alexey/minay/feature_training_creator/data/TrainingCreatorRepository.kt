@@ -25,7 +25,11 @@ class TrainingCreatorRepository @Inject constructor(
             )
 
             val exerciseIds = training.exercises.map { it.value }
-            storage.insertTraining(trainingDb, exerciseIds)
+            storage.insertTraining(
+                trainingDb = trainingDb,
+                exerciseIds = exerciseIds,
+                programId = training.programId.value
+            )
         }
 
     private fun List<MuscleGroupWithExercises>.asDomain() = map {

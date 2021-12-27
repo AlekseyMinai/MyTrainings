@@ -1,12 +1,14 @@
 package com.alexey.minay.feature_training_creator.presentation
 
+import com.alexey.minay.core_training.TrainingProgramId
 import com.alexey.minay.feature_training_creator.domain.Exercise
 import com.alexey.minay.feature_training_creator.domain.MuscleGroupId
 
 data class TrainingCreatorState(
     val title: String,
     val items: List<Item>,
-    val type: Type
+    val type: Type,
+    val programId: TrainingProgramId
 ) {
 
     sealed interface Item
@@ -32,10 +34,11 @@ data class TrainingCreatorState(
 
     companion object {
 
-        fun default() = TrainingCreatorState(
+        fun default(programId: TrainingProgramId) = TrainingCreatorState(
             title = "",
             items = emptyList(),
-            type = Type.TRAINING_CREATOR
+            type = Type.TRAINING_CREATOR,
+            programId = programId
         )
 
     }

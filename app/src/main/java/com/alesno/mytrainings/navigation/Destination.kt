@@ -3,9 +3,9 @@ package com.alesno.mytrainings.navigation
 import androidx.annotation.DrawableRes
 import com.alesno.mytrainings.R
 import com.alexey.minay.core_training.TrainingId
+import com.alexey.minay.core_training.TrainingProgramId
 import com.alexey.minay.core_training.TrainingTypeId
 import com.alexey.minay.core_utils.asString
-import com.alexey.minay.core_training.TrainingProgramId
 
 sealed class Destination(
     private var args: List<String> = emptyList(),
@@ -41,7 +41,16 @@ sealed class Destination(
         }
     }
 
-    class TrainingCreator : Destination(routePart = "training_creator")
+    class TrainingCreator(
+        programId: TrainingProgramId? = null
+    ) : Destination(
+        routePart = "training_creator",
+        args = listOf(programId?.value?.toString() ?: "{${KEY_PROGRAM_ID}}")
+    ) {
+        companion object {
+            const val KEY_PROGRAM_ID = "program_id"
+        }
+    }
 
     class Home(val item: HomeItem) : Destination(routePart = "home") {
         override val route: String

@@ -35,6 +35,7 @@ class TrainingCreatorStore(
 
         val training = Training(
             title = getState().title,
+            programId = getState().programId,
             exercises = getState().items.mapNotNull {
                 when (it) {
                     is TrainingCreatorState.MuscleGroupState -> null

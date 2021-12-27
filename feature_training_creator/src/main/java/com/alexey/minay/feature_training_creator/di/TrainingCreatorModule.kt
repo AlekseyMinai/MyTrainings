@@ -8,6 +8,7 @@ import dagger.Provides
 class TrainingCreatorModule {
 
     @Provides
-    fun provideTrainingCreatorState() = TrainingCreatorState.default()
+    fun provideTrainingCreatorState(dependency: ITrainingCreatorDependency) =
+        TrainingCreatorState.default(dependency.provideProgramId())
 
 }
