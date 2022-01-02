@@ -6,4 +6,8 @@
     <string name="choose_exercise">Выберите упражнения</string>
     <string name="new_training">Новая тренировка</string>
     <string name="input_training_title">Введите название тренировки</string>
+    <string name="apply">Подтвердить</string>
+    <string name="cancel">Отмена</string>
+    <string name="training_program_creation">Создание программы тренировок</string>
+    <string name="input_program_title">Введите название</string>
 </resources>

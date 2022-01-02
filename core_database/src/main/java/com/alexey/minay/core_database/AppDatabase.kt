@@ -14,7 +14,7 @@ import com.alexey.minay.core_database.training.entities.*
         ExerciseSetDb::class,
         TrainingTypeExercisesCrossRefDb::class,
         MuscleGroupExercisesCrossRefDb::class,
-        TrainingProgramsDb::class,
+        TrainingProgramDb::class,
         TrainingProgramsTrainingTypeCrossRefDb::class
     ],
     version = 1

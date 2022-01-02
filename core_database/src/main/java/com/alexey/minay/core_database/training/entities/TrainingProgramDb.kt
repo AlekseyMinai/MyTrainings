@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "TrainingPrograms")
-data class TrainingProgramsDb(
+data class TrainingProgramDb(
     val title: String
 ) {
     @PrimaryKey(autoGenerate = true)

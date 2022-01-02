@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alesno.mytrainings.di.AppComponent
 import com.alexey.minay.core_database.training.ITrainingProgramsDao
+import com.alexey.minay.core_utils.CoroutineDispatchersProvider
 import com.alexey.minay.feature_training_programs.di.ITrainingProgramsComponent
 import com.alexey.minay.feature_training_programs.domain.ITrainingProgramsDependencies
 import com.alexey.minay.feature_training_programs.presentation.TrainingProgramsStore
@@ -27,6 +28,10 @@ object TrainingProgramsStoreFactory {
         object : ITrainingProgramsDependencies {
             override fun provideTrainingProgramsDao(): ITrainingProgramsDao {
                 return appComponent.appDatabase.getTrainingProgramsDao()
+            }
+
+            override fun provideCoroutineDispatcherProvider(): CoroutineDispatchersProvider {
+                return appComponent.coroutineDispatchersProvider
             }
         }
 

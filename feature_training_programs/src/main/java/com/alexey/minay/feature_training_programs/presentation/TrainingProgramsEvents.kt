@@ -1,5 +1,10 @@
 package com.alexey.minay.feature_training_programs.presentation
 
-sealed class ITrainingProgramsIntent
+sealed interface ITrainingProgramsIntent {
+    class ChangeNewTrainingProgramTitle(val title: String) : ITrainingProgramsIntent
+    object DismissTrainingCreation : ITrainingProgramsIntent
+    object ConfirmTrainingCreation : ITrainingProgramsIntent
+    object CreateTrainingProgram : ITrainingProgramsIntent
+}
 
-sealed class ITrainingProgramsEvent
+sealed interface ITrainingProgramsEvent

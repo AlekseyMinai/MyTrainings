@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.alexey.minay.feature_training.R
 import com.alexey.minay.feature_training.presentation.EditSetDialogState
+import com.alexey.minay.core_ui.R as RCoreUi
 
 @Composable
 fun EditSetDialog(
@@ -52,12 +53,12 @@ fun EditSetDialog(
         },
         confirmButton = {
             Button(onClick = onConfirm) {
-                Text(text = stringResource(R.string.apply))
+                Text(text = stringResource(RCoreUi.string.apply))
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text(text = stringResource(R.string.cancel))
+                Text(text = stringResource(RCoreUi.string.cancel))
             }
             Button(onClick = onDelete) {
                 Text(text = stringResource(R.string.delete))

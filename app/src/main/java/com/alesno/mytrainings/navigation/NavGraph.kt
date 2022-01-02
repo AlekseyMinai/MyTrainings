@@ -80,9 +80,6 @@ fun NavGraphBuilder.trainingProgramsScreen(
             openProgram = { trainingProgramId ->
                 val route = Destination.TrainingList(trainingProgramId).route
                 navController.navigate(route)
-            },
-            createTraining = {
-
             }
         )
     }

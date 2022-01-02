@@ -21,17 +21,27 @@ import com.alexey.minay.core_training.TrainingProgramId
 import com.alexey.minay.core_ui.Toolbar2
 import com.alexey.minay.core_ui.gradientColor
 import com.alexey.minay.feature_training_programs.domain.TrainingProgram
+import com.alexey.minay.feature_training_programs.presentation.ITrainingProgramsIntent
+import com.alexey.minay.feature_training_programs.presentation.TrainingProgramsState
 import com.alexey.minay.feature_training_programs.presentation.TrainingProgramsStore
 import com.alexey.minay.core_ui.R as RCoreUi
 
 @Composable
 fun TrainingProgramScreen(
     store: TrainingProgramsStore,
-    openProgram: (TrainingProgramId) -> Unit,
-    createTraining: () -> Unit
+    openProgram: (TrainingProgramId) -> Unit
 ) {
     val state by store.state.collectAsState()
     val scrollState = rememberScrollState()
+
+    if (state.type == TrainingProgramsState.Type.CREATING_PROGRAM) {
+        TrainingProgramCreatorDialog(
+            onDismiss = { store.accept(ITrainingProgramsIntent.DismissTrainingCreation) },
+            onConfirm = { store.accept(ITrainingProgramsIntent.ConfirmTrainingCreation) },
+            onChangeTitle = { store.accept(ITrainingProgramsIntent.ChangeNewTrainingProgramTitle(it)) },
+            title = state.trainingProgramCreationState?.title ?: ""
+        )
+    }
 
     Column(
         Modifier
@@ -42,7 +52,11 @@ fun TrainingProgramScreen(
     ) {
         Toolbar2(title = stringResource(RCoreUi.string.training_program))
         Calendar()
-        Programs(state.programs, openProgram, createTraining)
+        Programs(
+            programs = state.programs,
+            openProgram = openProgram,
+            createProgram = { store.accept(ITrainingProgramsIntent.CreateTrainingProgram) }
+        )
     }
 }
 
@@ -50,7 +64,7 @@ fun TrainingProgramScreen(
 fun Programs(
     programs: List<TrainingProgram>,
     openProgram: (TrainingProgramId) -> Unit,
-    createTraining: () -> Unit
+    createProgram: () -> Unit
 ) {
     Box(modifier = Modifier.padding(top = 36.dp)) {
         LazyRow {
@@ -58,7 +72,7 @@ fun Programs(
                 ProgramItem(programs[index], openProgram)
             }
             item {
-                AddGroupItem(createTraining)
+                CreateProgramItem(createProgram)
             }
         }
     }
@@ -103,7 +117,7 @@ fun ProgramItem(
 }
 
 @Composable
-fun AddGroupItem(createTraining: () -> Unit) {
+fun CreateProgramItem(createProgram: () -> Unit) {
     Box(
         modifier = Modifier
             .padding(vertical = 4.dp)
@@ -112,7 +126,7 @@ fun AddGroupItem(createTraining: () -> Unit) {
     ) {
         Box(
             modifier = Modifier
-                .clickable { createTraining() }
+                .clickable { createProgram() }
                 .background(colorResource(id = RCoreUi.color.CardBackground))
                 .height(212.dp)
                 .width(132.dp)
